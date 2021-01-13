@@ -1,0 +1,25 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModel="clr-namespace:AlbumVersionControl.ViewModel"
+        xmlns:controls="clr-namespace:AlbumVersionControl.Controls"
+        xmlns:model="clr-namespace:AlbumVersionControl.Model"
+        x:Class="AlbumVersionControl.View.MainWindow"
+        mc:Ignorable="d"
+        Title="Журнал" 
+        Height="450" 
+        Width="800"
+        ResizeMode="CanResize"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Normal">
+    
+    <Window.DataContext>
+        <viewModel:MainViewModel />
+    </Window.DataContext>
+
+    <Grid>
+        
+    </Grid>
+</Window>
