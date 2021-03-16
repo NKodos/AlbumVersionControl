@@ -1,25 +1,66 @@
 ﻿<Window
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:viewModel="clr-namespace:AlbumVersionControl.ViewModel"
-        xmlns:controls="clr-namespace:AlbumVersionControl.Controls"
-        xmlns:model="clr-namespace:AlbumVersionControl.Model"
-        x:Class="AlbumVersionControl.View.MainWindow"
-        mc:Ignorable="d"
-        Title="Журнал" 
-        Height="450" 
-        Width="800"
-        ResizeMode="CanResize"
-        WindowStartupLocation="CenterScreen"
-        WindowState="Normal">
-    
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModel="clr-namespace:AlbumVersionControl.ViewModel"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:controls="clr-namespace:AlbumVersionControl"
+    xmlns:model="clr-namespace:AlbumVersionControl.Model"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    x:Class="AlbumVersionControl.View.MainWindow"
+    mc:Ignorable="d"
+    Title="Журнал"
+    Height="450"
+    Width="800"
+    ResizeMode="CanResize"
+    WindowStartupLocation="CenterScreen"
+    WindowState="Maximized">
+
     <Window.DataContext>
         <viewModel:MainViewModel />
     </Window.DataContext>
 
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" MinWidth="150" MaxWidth="500" />
+            <ColumnDefinition Width="*" MinWidth="300" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Header -->
+        <Grid Grid.ColumnSpan="2" Background="{StaticResource MediumBaseBrush}">
+            <materialDesign:PopupBox Name="PopupBox" PlacementMode="BottomAndAlignRightEdges" HorizontalAlignment="Right" Margin="10">
+                <StackPanel>
+                    <TextBlock Text="Test1" />
+                    <TextBlock Text="Test2" />
+                    <TextBlock Text="Test3" />
+                </StackPanel>
+            </materialDesign:PopupBox>
+        </Grid>
+
+         <!-- Side Navigation -->
+        <Grid HorizontalAlignment="Stretch" Grid.Row="1" Grid.Column="0" Background="{StaticResource MediumBaseBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="326*" />
+            </Grid.RowDefinitions>
+            <ScrollViewer HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Disabled"
+                          VerticalScrollBarVisibility="Auto" Grid.Row="1">
+                <StackPanel x:Name="SideNavigateMenu" Margin="10" HorizontalAlignment="Stretch" />
+            </ScrollViewer>
+        </Grid>
+        <GridSplitter Grid.Column="1" Grid.Row="1" ShowsPreview="False" Width="5" HorizontalAlignment="Left"
+                      VerticalAlignment="Stretch" />
+
+        <dxg:GridControl AutoGenerateColumns="AddNew" Grid.Column="1" Grid.Row="1" EnableSmartColumnsGeneration="True"
+                         HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,0,0,0" MinWidth="300">
+            <dxg:GridControl.View>
+                <dxg:TableView ShowTotalSummary="True" />
+            </dxg:GridControl.View>
+        </dxg:GridControl>
     </Grid>
 </Window>

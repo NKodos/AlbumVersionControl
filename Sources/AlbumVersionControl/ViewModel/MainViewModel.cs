@@ -1,12 +1,18 @@
-﻿using AlbumVersionControl.Model;
+﻿using DevExpress.Mvvm;
 
 namespace AlbumVersionControl.ViewModel
 {
-    public class MainViewModel : BaseVm
+    public class MainViewModel : ViewModelBase
     {
         public MainViewModel()
         {
-            OverlayService.GetInstance().Show = str => { OverlayService.GetInstance().Text = str; };
+
+        }
+
+        public string Title
+        {
+            get { return GetValue<string>(nameof(Title)); }
+            set { SetValue(value, nameof(Title)); }
         }
     }
 }

@@ -4,17 +4,17 @@
     xmlns:local="clr-namespace:AlbumVersionControl">
 
 
-    <SolidColorBrush x:Key="DarkBaseBrush" Color="#158150" />
-    <Color x:Key="DarkBaseColor">#158150</Color>
+    <SolidColorBrush x:Key="DarkBaseBrush" Color="#3553BA" />
+    <Color x:Key="DarkBaseColor">#3553BA</Color>
 
-    <SolidColorBrush x:Key="MediumBaseBrush" Color="#21a86d" />
-    <Color x:Key="MediumBaseColor">#21a86d</Color>
+    <SolidColorBrush x:Key="MediumBaseBrush" Color="#4065E0" />
+    <Color x:Key="MediumBaseColor">#4065E0</Color>
 
-    <SolidColorBrush x:Key="LightBaseBrush" Color="#FF2CB679" />
-    <Color x:Key="LightBaseColor">#FF2CB679</Color>
+    <SolidColorBrush x:Key="LightBaseBrush" Color="#FF5F82F5" />
+    <Color x:Key="LightBaseColor">#FF5F82F5</Color>
 
-    <SolidColorBrush x:Key="UltraLightBaseBrush" Color="#FF3BC588" />
-    <Color x:Key="UltraLightBaseColor">#FF3BC588</Color>
+    <SolidColorBrush x:Key="UltraLightBaseBrush" Color="#FF88A4FF" />
+    <Color x:Key="UltraLightBaseColor">#FF88A4FF</Color>
 
 
     <SolidColorBrush x:Key="DarkBrush" Color="#FFD6D6D6" />
