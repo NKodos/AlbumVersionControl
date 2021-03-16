@@ -6,7 +6,8 @@ namespace AlbumVersionControl.ViewModel
     {
         public MainViewModel()
         {
-
+            var testVm = new TestViewModel();
+            ((ISupportParameter) testVm).Parameter = "Doc_1";
         }
 
         public string Title

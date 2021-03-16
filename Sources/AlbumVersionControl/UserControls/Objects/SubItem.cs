@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace AlbumVersionControl.ViewModel.UserControls
+namespace AlbumVersionControl.UserControls.Objects
 {
     public class SubItem
     {

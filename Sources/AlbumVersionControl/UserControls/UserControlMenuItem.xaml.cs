@@ -1,8 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using AlbumVersionControl.ViewModel.UserControls;
+using AlbumVersionControl.UserControls.Objects;
 
-namespace AlbumVersionControl.View.UserControls
+namespace AlbumVersionControl.UserControls
 {
     /// <summary>
     ///     Interaction logic for UserControlMenuItem.xaml

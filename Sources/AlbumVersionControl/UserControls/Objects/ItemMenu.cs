@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using MaterialDesignThemes.Wpf;
 
-namespace AlbumVersionControl.ViewModel.UserControls
+namespace AlbumVersionControl.UserControls.Objects
 {
     public class ItemMenu : UserControl
     {
