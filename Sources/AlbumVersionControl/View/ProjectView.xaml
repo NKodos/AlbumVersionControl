@@ -1,0 +1,41 @@
+﻿<UserControl xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+             xmlns:viewModel="clr-namespace:AlbumVersionControl.ViewModels"
+             xmlns:dxwui="http://schemas.devexpress.com/winfx/2008/xaml/windowsui"
+             x:Class="AlbumVersionControl.View.ProjectView"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="700"
+             Margin="50,0,50,0"
+             DataContext="{dxmvvm:ViewModelSource viewModel:ProjectViewModel}">
+
+    <dxwui:PageAdornerControl Header="Проект Блаблабла">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Content="{DXBinding '`Создан: ` + CreatedAt.ToString(`dd.MM.yyyy`)'}"
+                   HorizontalAlignment="Right" Foreground="#DD343434" />
+            <Label Grid.Row="1" Content="{DXBinding '`Изменен: ` + CreatedAt.ToString(`dd.MM.yyyy`)'}"
+                   HorizontalAlignment="Right" Foreground="#DD343434" />
+            <dxe:TextEdit Grid.Row="2" IsReadOnly="True" TextWrapping="Wrap" AcceptsReturn="True" VerticalContentAlignment="Top"
+                          MaxHeight="70" VerticalScrollBarVisibility="Auto"
+                          EditValue="Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat repellat officiis totam aliquid soluta tenetur quasi, debitis minima blanditiis exercitationem autem. Facere incidunt at similique nostrum magnam quidem ipsam minima?" />
+            <Label Grid.Row="3" Content="Версии:" />
+            <dxg:GridControl Grid.Row="4" AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True">
+                <dxg:GridControl.View>
+                    <dxg:TableView ShowTotalSummary="True" />
+                </dxg:GridControl.View>
+            </dxg:GridControl>
+        </Grid>
+    </dxwui:PageAdornerControl>
+</UserControl>

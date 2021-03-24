@@ -7,12 +7,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
     xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
-    xmlns:viewModel="clr-namespace:AlbumVersionControl.ViewModel"
-    Height="Auto" Width="Auto" MinWidth="700" MinHeight="700"
-    mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="800"
-    DataContext="{dxmvvm:ViewModelSource viewModel:MainViewModel}">
+    xmlns:dxwui="http://schemas.devexpress.com/winfx/2008/xaml/windowsui"
+    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm" 
+    xmlns:dxwuin="http://schemas.devexpress.com/winfx/2008/xaml/windowsui/navigation"
+    xmlns:viewModels="clr-namespace:AlbumVersionControl.ViewModels"
+    Height="Auto" Width="Auto" MinWidth="700" MinHeight="400"
+    mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+    DataContext="{dxmvvm:ViewModelSource viewModels:MainViewModel}">
     
     <DockPanel LastChildFill="True">
         <dxr:RibbonControl DockPanel.Dock="Top" RibbonStyle="Office2019">
@@ -29,15 +31,19 @@
             </dxr:RibbonDefaultPageCategory>
         </dxr:RibbonControl>
 
-        <dxr:RibbonStatusBarControl DockPanel.Dock="Bottom">
+        <dxr:RibbonStatusBarControl DockPanel.Dock="Bottom" Margin="0,20,0,0">
             <dxr:RibbonStatusBarControl.RightItems>
             </dxr:RibbonStatusBarControl.RightItems>
         </dxr:RibbonStatusBarControl>
 
-        <dxg:GridControl AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True" Margin="50,0,53,0">
-            <dxg:GridControl.View>
-                <dxg:TableView ShowTotalSummary="True" />
-            </dxg:GridControl.View>
-        </dxg:GridControl>
+        <dxwui:NavigationFrame AnimationType="SlideHorizontal" NavigationCacheMode="Required">
+            <dxmvvm:Interaction.Triggers>
+                <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding OnViewLoadedCommand}" />
+            </dxmvvm:Interaction.Triggers>
+            <dxmvvm:Interaction.Behaviors>
+                <dxwuin:FrameNavigationService />
+            </dxmvvm:Interaction.Behaviors>
+        </dxwui:NavigationFrame>
+        
     </DockPanel>
 </UserControl>
