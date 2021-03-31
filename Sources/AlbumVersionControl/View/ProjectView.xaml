@@ -14,7 +14,7 @@
              Margin="50,0,50,0"
              DataContext="{dxmvvm:ViewModelSource viewModel:ProjectViewModel}">
 
-    <dxwui:PageAdornerControl Header="Проект Блаблабла">
+    <dxwui:PageAdornerControl Header="{Binding CurrentProject.Title}">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -23,13 +23,13 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Content="{DXBinding '`Создан: ` + CreatedAt.ToString(`dd.MM.yyyy`)'}"
+            <Label Grid.Row="0" Content="{DXBinding '`Создан: ` + CurrentProject.CreatedAt.ToString(`dd.MM.yyyy`)'}"
                    HorizontalAlignment="Right" Foreground="#DD343434" />
-            <Label Grid.Row="1" Content="{DXBinding '`Изменен: ` + CreatedAt.ToString(`dd.MM.yyyy`)'}"
+            <Label Grid.Row="1" Content="{DXBinding '`Изменен: ` + CurrentProject.CreatedAt.ToString(`dd.MM.yyyy`)'}"
                    HorizontalAlignment="Right" Foreground="#DD343434" />
             <dxe:TextEdit Grid.Row="2" IsReadOnly="True" TextWrapping="Wrap" AcceptsReturn="True" VerticalContentAlignment="Top"
                           MaxHeight="70" VerticalScrollBarVisibility="Auto"
-                          EditValue="Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat repellat officiis totam aliquid soluta tenetur quasi, debitis minima blanditiis exercitationem autem. Facere incidunt at similique nostrum magnam quidem ipsam minima?" />
+                          EditValue="{Binding CurrentProject.Caption}" />
             <Label Grid.Row="3" Content="Версии:" />
             <dxg:GridControl Grid.Row="4" AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True">
                 <dxg:GridControl.View>

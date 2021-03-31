@@ -7,6 +7,7 @@
              xmlns:viewModels="clr-namespace:AlbumVersionControl.ViewModels"
              xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
              xmlns:dxwui="http://schemas.devexpress.com/winfx/2008/xaml/windowsui"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
              mc:Ignorable="d"
              d:DesignHeight="200" d:DesignWidth="500"
              Margin="50,0,50,0"
@@ -18,11 +19,21 @@
                 <RowDefinition Height="50"></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            <Button Grid.Row="0"  Content="Форма проекта" Width="200" Command="{Binding NavigateProjectCommand}"/>
-            <dxg:GridControl Grid.Row="1" AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True">
+            <dxg:GridControl Name="MainGrid" Grid.Row="1" AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True" 
+                             ItemsSource="{Binding Projects}">
                 <dxg:GridControl.View>
-                    <dxg:TableView ShowTotalSummary="True" />
+                    <dxg:TableView ShowTotalSummary="True" AutoWidth="True" BestFitMode="VisibleRows">
+                        <dxmvvm:Interaction.Behaviors>
+                            <dxmvvm:EventToCommand Command="{Binding RowDoubleClickCommand}"  
+                                                   CommandParameter="{Binding ElementName=MainGrid, Path=CurrentItem}"  
+                                                   EventName="RowDoubleClick" />
+                        </dxmvvm:Interaction.Behaviors>
+                    </dxg:TableView>
                 </dxg:GridControl.View>
+                <dxg:GridColumn FieldName="Title" Header="Заголовок" IsSmart="True"/>
+                <dxg:GridColumn FieldName="Caption" Header="Описание" IsSmart="True"/>
+                <dxg:GridColumn FieldName="CreatedAt" Header="Дата создания" IsSmart="True"/>
+                <dxg:GridColumn FieldName="UpdatedAt" Header="Дата изменения" IsSmart="True"/>
             </dxg:GridControl>
         </Grid>
     </dxwui:PageAdornerControl>
