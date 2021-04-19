@@ -27,7 +27,12 @@
                         <dxb:BarButtonItem Content="Настройки" RibbonStyle="Large" LargeGlyph="{dx:DXImage SvgImages/Icon Builder/Actions_Settings.svg}"/>
                         <dxb:BarButtonItem Content="Удалить" RibbonStyle="Large" LargeGlyph="{dx:DXImage SvgImages/Snap/SnapDeleteList.svg}"/>
                     </dxr:RibbonPageGroup>
+                    <dxr:RibbonPageGroup Caption="Версии">
+                        <dxb:BarButtonItem Content="Показать содержимое" RibbonStyle="Large" LargeGlyph="{dx:DXImage SvgImages/Actions/Open.svg}" Command="{Binding OpenVersionFolderCommand}"/>
+                        <dxb:BarButtonItem Content="Сгенерировать классы" RibbonStyle="Large" LargeGlyph="{dx:DXImage SvgImages/Actions/Open.svg}" Command="{Binding GenerateClassesCommand}"/>
+                    </dxr:RibbonPageGroup>
                 </dxr:RibbonPage>
+                
             </dxr:RibbonDefaultPageCategory>
         </dxr:RibbonControl>
 
@@ -36,7 +41,7 @@
             </dxr:RibbonStatusBarControl.RightItems>
         </dxr:RibbonStatusBarControl>
 
-        <dxwui:NavigationFrame AnimationType="SlideHorizontal" NavigationCacheMode="Required">
+        <dxwui:NavigationFrame Name="NavigationFrame" AnimationType="SlideHorizontal" NavigationCacheMode="Required">
             <dxmvvm:Interaction.Triggers>
                 <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding OnViewLoadedCommand}" />
             </dxmvvm:Interaction.Triggers>

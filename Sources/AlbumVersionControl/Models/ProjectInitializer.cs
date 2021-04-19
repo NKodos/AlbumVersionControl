@@ -22,9 +22,9 @@ namespace AlbumVersionControl.Models
                               "отправителе и получателе.",
                     CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now,
-                    Versions = new List<Version>
+                    Versions = new List<ProjectVersion>
                     {
-                        new Version {Description = "Первая версия документа"}
+                        new ProjectVersion {Description = "Первая версия документа", Version = Version.Parse("1.0.0")}
                     }
                 },
                 new Project
@@ -34,9 +34,9 @@ namespace AlbumVersionControl.Models
                               "несёт обязательство доставить груз на таможню.",
                     CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now,
-                    Versions = new List<Version>
+                    Versions = new List<ProjectVersion>
                     {
-                        new Version {Description = "Первая версия документа"}
+                        new ProjectVersion {Description = "Первая версия документа", Version = Version.Parse("1.0.0")}
                     }
                 },
                 new Project
@@ -48,9 +48,9 @@ namespace AlbumVersionControl.Models
                               "отправителя, перевозчика и получателя товара.",
                     CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now,
-                    Versions = new List<Version>
+                    Versions = new List<ProjectVersion>
                     {
-                        new Version {Description = "Первая версия документа"}
+                        new ProjectVersion {Description = "Первая версия документа", Version = Version.Parse("1.0.0")}
                     }
                 },
                 new Project
@@ -62,9 +62,9 @@ namespace AlbumVersionControl.Models
                               " в соответствии с условиями платежа и действующими правилами валютного контроля.",
                     CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now,
-                    Versions = new List<Version>
+                    Versions = new List<ProjectVersion>
                     {
-                        new Version {Description = "Первая версия документа"}
+                        new ProjectVersion {Description = "Первая версия документа", Version = Version.Parse("1.0.0")}
                     }
                 },
                 new Project
@@ -75,9 +75,9 @@ namespace AlbumVersionControl.Models
                         " грузовой таможенной декларации (ГТД) и без нее этот документ недействителен.",
                     CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now,
-                    Versions = new List<Version>
+                    Versions = new List<ProjectVersion>
                     {
-                        new Version {Description = "Первая версия документа"}
+                        new ProjectVersion {Description = "Первая версия документа", Version = Version.Parse("1.0.0")}
                     }
                 },
                 new Project
@@ -89,9 +89,9 @@ namespace AlbumVersionControl.Models
                               "или в соответствии с положениями контракта.",
                     CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now,
-                    Versions = new List<Version>
+                    Versions = new List<ProjectVersion>
                     {
-                        new Version {Description = "Первая версия документа"}
+                        new ProjectVersion {Description = "Первая версия документа", Version = Version.Parse("1.0.0")}
                     }
                 }
             };

@@ -56,6 +56,9 @@
     <Reference Include="MaterialDesignThemes.Wpf, Version=3.2.0.1979, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignThemes.3.2.0\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
     </Reference>
+    <Reference Include="Octokit, Version=0.50.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Octokit.0.50.0\lib\net46\Octokit.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -80,9 +83,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Generator.cs" />
+    <Compile Include="Global.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\ProjectInitializer.cs" />
-    <Compile Include="Models\Version.cs" />
+    <Compile Include="Models\ProjectVersion.cs" />
+    <Compile Include="Octokit\Converter.cs" />
+    <Compile Include="Octokit\Super.cs" />
     <Compile Include="View\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
@@ -93,6 +100,10 @@
       <DependentUpon>ProjectJournalView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\ProjectJournalViewModel.cs" />
+    <Compile Include="View\ProjectVersionView.xaml.cs">
+      <DependentUpon>ProjectVersionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\ProjectVersionViewModel.cs" />
     <Compile Include="View\ProjectView.xaml.cs">
       <DependentUpon>ProjectView.xaml</DependentUpon>
     </Compile>
@@ -153,6 +164,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ProjectJournalView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ProjectVersionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

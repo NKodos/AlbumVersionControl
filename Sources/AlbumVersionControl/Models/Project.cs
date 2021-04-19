@@ -13,6 +13,6 @@ namespace AlbumVersionControl.Models
 
         public DateTime UpdatedAt { get; set; }
 
-        public List<Version> Versions { get; set; }
+        public List<ProjectVersion> Versions { get; set; }
     }
 }

@@ -1,5 +1,4 @@
-﻿<UserControl xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
-             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+﻿<UserControl xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -31,10 +30,31 @@
                           MaxHeight="70" VerticalScrollBarVisibility="Auto"
                           EditValue="{Binding CurrentProject.Caption}" />
             <Label Grid.Row="3" Content="Версии:" />
-            <dxg:GridControl Grid.Row="4" AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True">
+
+            <dxg:GridControl Name="MainGrid" Grid.Row="4" AutoGenerateColumns="AddNew" 
+                             EnableSmartColumnsGeneration="True" ItemsSource="{Binding Versions}">
+
+                <dxmvvm:Interaction.Behaviors>
+                    <dxmvvm:EventToCommand EventName="SelectedItemChanged" 
+                                           Command="{Binding SelectedItemCommand}" 
+                                           CommandParameter="{Binding ElementName=MainGrid, Path=CurrentItem}"/>
+                </dxmvvm:Interaction.Behaviors>
+
                 <dxg:GridControl.View>
-                    <dxg:TableView ShowTotalSummary="True" />
+                    <dxg:TableView Name="MainGridView" ShowTotalSummary="True" AutoWidth="True" BestFitMode="VisibleRows">
+                        <dxmvvm:Interaction.Behaviors>
+                            <dxmvvm:EventToCommand EventName="RowDoubleClick" 
+                                                   Command="{Binding RowDoubleClickCommand}"  
+                                                   CommandParameter="{Binding ElementName=MainGrid, Path=CurrentItem}"/>
+                        </dxmvvm:Interaction.Behaviors>
+                    </dxg:TableView>
                 </dxg:GridControl.View>
+                <dxg:GridColumn FieldName="Version" Header="Версия" IsSmart="True"/>
+                <dxg:GridColumn FieldName="Description" Header="Описание" IsSmart="True"/>
+                <dxg:GridColumn FieldName="CreatedAt" Header="Дата создания" IsSmart="True"/>
+                <dxg:GridColumn FieldName="Author" Header="Автор" IsSmart="True"/>
+                <dxg:GridColumn FieldName="Id" Header="Id" IsSmart="True" Visible="False"/>
+                <dxg:GridColumn FieldName="CommitDetail" IsSmart="True" Visible="False"/>
             </dxg:GridControl>
         </Grid>
     </dxwui:PageAdornerControl>
