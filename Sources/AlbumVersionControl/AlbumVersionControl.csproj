@@ -88,7 +88,6 @@
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\ProjectInitializer.cs" />
     <Compile Include="Models\ProjectVersion.cs" />
-    <Compile Include="Octokit\Converter.cs" />
     <Compile Include="Octokit\Super.cs" />
     <Compile Include="View\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
