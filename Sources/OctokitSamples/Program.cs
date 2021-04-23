@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Octokit;
+using FileMode = Octokit.FileMode;
 
 namespace OctokitSamples
 {
@@ -59,33 +61,36 @@ namespace OctokitSamples
 
         private static void CreateCommit(GitHubClient client)
         {
-            const string repositoryName = "MyNewRepository11";
+            const string repositoryName = "Newnew111";
 
             // 1. Get the SHA of the latest commit of the master branch.
             var headMasterRef = "heads/main";
+            var fileName = "Test.txt";
             var masterReference =
                 client.Git.Reference.Get(Owner, repositoryName, headMasterRef).Result; // Get reference of master branch
             var latestCommit = client.Git.Commit.Get(Owner, repositoryName,
                 masterReference.Object.Sha).Result; // Get the laster commit of this branch
-            var nt = new NewTree {BaseTree = latestCommit.Tree.Sha};
 
             //2. Create the blob(s) corresponding to your file(s)
-            var textBlob = new NewBlob {Encoding = EncodingType.Utf8, Content = "Hellow World!"};
+            var textBlob = new NewBlob {Encoding = EncodingType.Utf8, Content = File.ReadAllText(fileName) };
             var textBlobRef = client.Git.Blob.Create(Owner, repositoryName, textBlob);
 
             // 3. Create a new tree with:
+            var nt = new NewTree{ BaseTree = latestCommit.Tree.Sha };
             nt.Tree.Add(new NewTreeItem
-                {Path = "Test.txt", Mode = "100644", Type = TreeType.Blob, Sha = textBlobRef.Result.Sha});
+            {
+                Path = fileName, Mode = FileMode.File, Type = TreeType.Blob, Sha = textBlobRef.Result.Sha
+            });
             var newTree = client.Git.Tree.Create(Owner, repositoryName, nt).Result;
 
             // 4. Create the commit with the SHAs of the tree and the reference of master branch
             // Create Commit
-            var newCommit = new NewCommit("Commit test with several files", newTree.Sha, masterReference.Object.Sha);
+            var newCommit = new NewCommit("Update Test.txt", newTree.Sha, masterReference.Object.Sha);
             var commit = client.Git.Commit.Create(Owner, repositoryName, newCommit).Result;
 
             // 5. Update the reference of master branch with the SHA of the commit
             // Update HEAD with the commit
-            client.Git.Reference.Update(Owner, repositoryName, headMasterRef, new ReferenceUpdate(commit.Sha));
+            var reference = client.Git.Reference.Update(Owner, repositoryName, headMasterRef, new ReferenceUpdate(commit.Sha)).Result;
         }
 
 

@@ -3,23 +3,18 @@
 namespace AlbumVersionControl.View
 {
     /// <summary>
-    ///     Interaction logic for NewProjcetDialogView.xaml
+    /// Interaction logic for NewCommitDialogView.xaml
     /// </summary>
-    public partial class NewProjcetDialogView : Window
+    public partial class NewCommitDialogView : Window
     {
-        public NewProjcetDialogView()
+        public NewCommitDialogView()
         {
             InitializeComponent();
         }
 
-        public string ProjectName
+        public string Message
         {
-            get => txtName.Text;
-        }
-
-        public string ProjectDescription
-        {
-            get => txtDescription.Text;
+            get => txtMessage.Text;
         }
 
         private void ButtonOk_Click(object sender, RoutedEventArgs e)

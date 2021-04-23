@@ -19,6 +19,8 @@ namespace GitApi.Interfaces
 
         IGitOwner Owner { get; set; }
 
+        IGitCommit CreateNewCommit(string message);
+
         IGitCommit GetCommit(string reference);
 
         IEnumerable<IGitCommit> GetAllCommits();

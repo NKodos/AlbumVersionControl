@@ -109,6 +109,9 @@
     <Compile Include="UserControls\UserControlMenuItem.xaml.cs">
       <DependentUpon>UserControlMenuItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\NewCommitDialogView.xaml.cs">
+      <DependentUpon>NewCommitDialogView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\NewProjcetDialogView.xaml.cs">
       <DependentUpon>NewProjcetDialogView.xaml</DependentUpon>
     </Compile>
@@ -176,6 +179,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\UserControlMenuItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\NewCommitDialogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

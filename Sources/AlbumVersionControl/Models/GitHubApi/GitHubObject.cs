@@ -9,27 +9,30 @@ namespace AlbumVersionControl.Models.GitHubApi
     {
         // Todo: сделать эту константу генерируемую из каких-то идентифицирующихся элементов
         public const string ProjectName = "AlbumVersionControl";
+        private GitHubClient _client;
 
         public GitHubClient GetClient(IGitConnection connection)
         {
-            var client = new GitHubClient(new ProductHeaderValue(ProjectName));
+            if (_client != null) return _client;
+
+            _client = new GitHubClient(new ProductHeaderValue(ProjectName));
 
             switch (connection.ConnectionType)
             {
                 case GitConnectionType.Guest:
                     break;
                 case GitConnectionType.Basic:
-                    client.Credentials = new Credentials(connection.Login, connection.Password, AuthenticationType.Basic);
+                    _client.Credentials = new Credentials(connection.Login, connection.Password, AuthenticationType.Basic);
                     break;
                 case GitConnectionType.Oauth:
-                    client.Credentials = new Credentials(connection.Token, AuthenticationType.Oauth);
+                    _client.Credentials = new Credentials(connection.Token, AuthenticationType.Oauth);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
 
-            var user = client.User.Current().Result;
-            return client;
+            var user = _client.User.Current().Result;
+            return _client;
         }
     }
 }

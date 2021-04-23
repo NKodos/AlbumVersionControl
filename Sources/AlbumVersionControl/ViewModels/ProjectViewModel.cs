@@ -39,9 +39,7 @@ namespace AlbumVersionControl.ViewModels
                 throw new ArgumentException("Parameter type unknown", nameof(parameter));
             
             CurrentProject = currentProject;
-            var journal = new AlbumJournal();
-            var versions = journal.GetProjectVersions(CurrentProject);
-            Versions = new ObservableCollection<ProjectVersion>(versions);
+            LoadVersions();
 
             base.OnParameterChanged(parameter);
         }
@@ -58,6 +56,15 @@ namespace AlbumVersionControl.ViewModels
             SelectedVersion = currentVersion;
         }
 
+        public void CreateNewVersion(string message)
+        {
+            if (SelectedVersion != null)
+            {
+                CurrentProject.GitRepository.CreateNewCommit(message);
+                LoadVersions();
+            }
+        }
+
         public void OpenCuerrentVersionFolder()
         {
             if (SelectedVersion != null)
@@ -71,6 +78,13 @@ namespace AlbumVersionControl.ViewModels
         private void NavigateProject(ProjectVersion version)
         {
             NavigationService.Navigate("ProjectVersionView", version, this);
+        }
+
+        private void LoadVersions()
+        {
+            var journal = new AlbumJournal();
+            var versions = journal.GetProjectVersions(CurrentProject);
+            Versions = new ObservableCollection<ProjectVersion>(versions);
         }
     }
 }

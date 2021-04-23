@@ -20,6 +20,17 @@ namespace AlbumVersionControl.ViewModels
         }
 
         [Command]
+        public void CreateNewVersion()
+        {
+            var newCommitDialog = new NewCommitDialogView();
+            newCommitDialog.ShowDialog();
+            if (newCommitDialog.DialogResult != null && (bool)newCommitDialog.DialogResult)
+            {
+                Global.ProjectViewModel?.CreateNewVersion(newCommitDialog.Message);
+            }
+        }
+
+        [Command]
         public void OpenVersionFolder()
         {
             Global.ProjectViewModel?.OpenCuerrentVersionFolder();

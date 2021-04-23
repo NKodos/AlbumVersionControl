@@ -26,6 +26,7 @@
                         <dxb:BarButtonItem Content="Удалить" RibbonStyle="Large" LargeGlyph="{dx:DXImage SvgImages/Snap/SnapDeleteList.svg}"/>
                     </dxr:RibbonPageGroup>
                     <dxr:RibbonPageGroup Caption="Версии">
+                        <dxb:BarButtonItem Content="Создать новую" RibbonStyle="Large" Command="{Binding CreateNewVersionCommand}" LargeGlyph="{dx:DXImage SvgImages/Edit/Copy.svg}"/>
                         <dxb:BarButtonItem Content="Показать содержимое" RibbonStyle="Large" LargeGlyph="{dx:DXImage SvgImages/Actions/Open.svg}" Command="{Binding OpenVersionFolderCommand}"/>
                         <dxb:BarButtonItem Content="Сгенерировать классы" RibbonStyle="Large" Command="{Binding GenerateClassesCommand}" LargeGlyph="{dx:DXImage SvgImages/RichEdit/ShowAllFieldCodes.svg}"/>
                     </dxr:RibbonPageGroup>
