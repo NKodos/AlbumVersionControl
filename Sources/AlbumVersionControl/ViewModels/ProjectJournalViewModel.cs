@@ -1,6 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using AlbumVersionControl.Models;
-using AlbumVersionControl.Octokit;
 using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
 
@@ -28,7 +27,8 @@ namespace AlbumVersionControl.ViewModels
         protected override void OnInitializeInRuntime()
         {
             base.OnInitializeInRuntime();
-            Projects = new ObservableCollection<Project>(SuperGlobal.GetProjectsFromGitHub(SuperGlobal.GetClient())); //ProjectInitializer.GetProjectsDataSource();
+            var journal = new AlbumJournal();
+            Projects = new ObservableCollection<Project>(journal.GetAllCurrentProjects());
         }
 
         private void NavigateProject(Project project)

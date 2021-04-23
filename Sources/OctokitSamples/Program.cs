@@ -19,9 +19,9 @@ namespace OctokitSamples
             client.Credentials = basicAuth;
             var user = await client.User.Get(Owner);
             //CreateRepository(client);
-            GetAllCommits(client);
+            //GetAllCommits(client);
             //CreateMainBranch(client);
-            CreateCommit(client);
+            //CreateCommit(client);
         }
 
         private static void CreateRepository(IGitHubClient client)

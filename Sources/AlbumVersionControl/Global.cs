@@ -1,6 +1,4 @@
-﻿using AlbumVersionControl.Models;
-using AlbumVersionControl.View;
-using AlbumVersionControl.ViewModels;
+﻿using AlbumVersionControl.ViewModels;
 
 namespace AlbumVersionControl
 {

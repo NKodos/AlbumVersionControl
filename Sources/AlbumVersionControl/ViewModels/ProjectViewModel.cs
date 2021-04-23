@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using AlbumVersionControl.Models;
-using AlbumVersionControl.Octokit;
 using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
 
@@ -62,8 +61,9 @@ namespace AlbumVersionControl.ViewModels
         {
             if (SelectedVersion != null)
             {
-                SuperGlobal.LoadCommitFile(SelectedVersion.CommitDetail);
-                System.Diagnostics.Process.Start("explorer.exe", SuperGlobal.FolderPath);
+                var journal = new AlbumJournal();
+                journal.LoadFiles(SelectedVersion.CommitDetail.Key, SelectedVersion.CommitDetail.Value);
+                System.Diagnostics.Process.Start("explorer.exe", AlbumJournal.FolderPath);
             }
         }
 
