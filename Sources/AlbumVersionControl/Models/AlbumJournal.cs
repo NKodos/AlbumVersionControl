@@ -16,10 +16,6 @@ namespace AlbumVersionControl.Models
         private GitHubConnection _connection;
         public const string FolderPath = @"C:\Users\User\Desktop\VersionContent";
 
-        public AlbumJournal()
-        {
-        }
-
         public List<Project> GetAllCurrentProjects()
         {
             GetConnectionFromConfig();
@@ -38,6 +34,14 @@ namespace AlbumVersionControl.Models
             {
                 DownloadFile(file);
             }
+        }
+
+        public void CreateProject(string name, string description)
+        {
+            GetConnectionFromConfig();
+            var service = new GitHubService(_connection);
+            var owner = service.GetOwner(_connection.Login);
+            var repository = owner.CreateRepository(name, description);
         }
 
         private static List<Project> ConvertGitHubRepositoriesToProject(IEnumerable<IGitRepository> repositories)
@@ -68,6 +72,12 @@ namespace AlbumVersionControl.Models
             return !string.IsNullOrEmpty(configConnection.Password)
                 ? new GitHubConnection(configConnection.Login, configConnection.Password)
                 : new GitHubConnection();
+        }
+
+        public List<ProjectVersion> GetProjectVersions(Project currentProject)
+        {
+            var commits = currentProject.GitRepository.GetAllCommits();
+            return commits?.ConvertToVersions(currentProject);
         }
 
         private void DownloadFile(GitHubCommitFile file)

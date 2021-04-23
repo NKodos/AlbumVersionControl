@@ -12,7 +12,7 @@ namespace AlbumVersionControl.Extensions
             project.Caption = repository.Description;
             project.CreatedAt = repository.CreatedAt;
             project.UpdatedAt = repository.UpdatedAt;
-            project.Versions = repository.GetAllCommits().ConvertToVersions(project);
+            project.GitRepository = repository;
         }
     }
 }

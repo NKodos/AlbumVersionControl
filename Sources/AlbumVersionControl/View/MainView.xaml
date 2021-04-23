@@ -21,7 +21,7 @@
             <dxr:RibbonDefaultPageCategory>
                 <dxr:RibbonPage Caption="Главная">
                     <dxr:RibbonPageGroup Caption="Проекты">
-                        <dxb:BarButtonItem Content="Создать" RibbonStyle="Large" LargeGlyph="{dx:DXImage SvgImages/Outlook Inspired/AddFile.svg}"/>
+                        <dxb:BarButtonItem Content="Создать" RibbonStyle="Large" Command="{Binding CreateProjectCommand}" LargeGlyph="{dx:DXImage SvgImages/Outlook Inspired/AddFile.svg}"/>
                         <dxb:BarButtonItem Content="Настройки" RibbonStyle="Large" LargeGlyph="{dx:DXImage SvgImages/Icon Builder/Actions_Settings.svg}"/>
                         <dxb:BarButtonItem Content="Удалить" RibbonStyle="Large" LargeGlyph="{dx:DXImage SvgImages/Snap/SnapDeleteList.svg}"/>
                     </dxr:RibbonPageGroup>

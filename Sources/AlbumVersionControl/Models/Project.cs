@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using GitApi.Interfaces;
 
 namespace AlbumVersionControl.Models
 {
@@ -14,5 +15,7 @@ namespace AlbumVersionControl.Models
         public DateTime UpdatedAt { get; set; }
 
         public List<ProjectVersion> Versions { get; set; }
+
+        public IGitRepository GitRepository { get; set; }
     }
 }

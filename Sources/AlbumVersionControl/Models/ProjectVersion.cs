@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using GitApi.Interfaces;
 
 namespace AlbumVersionControl.Models
 {
@@ -16,6 +17,8 @@ namespace AlbumVersionControl.Models
         public string Author { get; set; }
 
         public Project Project { get; set; }
+
+        public IGitCommit GitCommit { get; set; }
 
         // repositoryId, commitSha
         public KeyValuePair<long, string> CommitDetail { get; set; }

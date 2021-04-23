@@ -10,6 +10,8 @@ namespace GitApi.Interfaces
 
         IGitRepository GetRepository(string name);
 
+        IGitRepository CreateRepository(string name, string description);
+
         IEnumerable<IGitRepository> GetRepositories();
     }
 }

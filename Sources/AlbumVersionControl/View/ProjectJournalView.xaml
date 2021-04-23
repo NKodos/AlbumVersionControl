@@ -34,6 +34,7 @@
                 <dxg:GridColumn FieldName="Caption" Header="Описание" IsSmart="True"/>
                 <dxg:GridColumn FieldName="CreatedAt" Header="Дата создания" IsSmart="True"/>
                 <dxg:GridColumn FieldName="UpdatedAt" Header="Дата изменения" IsSmart="True"/>
+                <dxg:GridColumn FieldName="GitRepository" Header="Репозитории" Visible="False"/>
             </dxg:GridControl>
         </Grid>
     </dxwui:PageAdornerControl>

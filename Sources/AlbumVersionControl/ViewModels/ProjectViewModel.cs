@@ -35,12 +35,13 @@ namespace AlbumVersionControl.ViewModels
         {
             Global.ProjectViewModel = this;
             if (parameter == null) parameter = new Project();
-            if (!(parameter is Project currentProject)) throw new ArgumentException("Parameter type unknown", nameof(parameter));
+            if (!(parameter is Project currentProject))
+                throw new ArgumentException("Parameter type unknown", nameof(parameter));
+            
             CurrentProject = currentProject;
-            if (CurrentProject.Versions?.Count > 0)
-            {
-                Versions = new ObservableCollection<ProjectVersion>(CurrentProject.Versions);
-            }
+            var journal = new AlbumJournal();
+            var versions = journal.GetProjectVersions(CurrentProject);
+            Versions = new ObservableCollection<ProjectVersion>(versions);
 
             base.OnParameterChanged(parameter);
         }

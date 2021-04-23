@@ -1,6 +1,7 @@
-﻿using DevExpress.Mvvm;
+﻿using AlbumVersionControl.Models;
+using AlbumVersionControl.View;
+using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
-using DevExpress.Xpf.WindowsUI;
 
 namespace AlbumVersionControl.ViewModels
 {
@@ -28,6 +29,23 @@ namespace AlbumVersionControl.ViewModels
         public void GenerateClasses()
         {
             Generator.Generate();
+        }
+
+        [Command]
+        public void CreateProject()
+        {
+            var newProjectDialog = new NewProjcetDialogView();
+            newProjectDialog.ShowDialog();
+            if (newProjectDialog.DialogResult != null && (bool)newProjectDialog.DialogResult)
+            {
+                var journal = new AlbumJournal();
+                journal.CreateProject(newProjectDialog.ProjectName, newProjectDialog.ProjectDescription);
+
+                if (NavigationService.Current is ProjectJournalViewModel projectJournalViewModel)
+                {
+                    projectJournalViewModel.LoadProjects();
+                }
+            }
         }
     }
 }

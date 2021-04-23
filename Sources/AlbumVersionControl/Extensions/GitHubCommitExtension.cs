@@ -20,7 +20,8 @@ namespace AlbumVersionControl.Extensions
                 Version = new Version("1.0." + version--),
                 CommitDetail = new KeyValuePair<long, string>(commit.Repository.Id, commit.Sha),
                 Project = project,
-                CreatedAt = commit.CreatedAt
+                CreatedAt = commit.CreatedAt,
+                GitCommit = commit
             }).ToList();
         }
     }

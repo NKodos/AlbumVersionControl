@@ -24,11 +24,16 @@ namespace AlbumVersionControl.ViewModels
             NavigateProject(currentItem);
         }
 
+        public void LoadProjects()
+        {
+            var journal = new AlbumJournal();
+            Projects = new ObservableCollection<Project>(journal.GetAllCurrentProjects());
+        }
+
         protected override void OnInitializeInRuntime()
         {
             base.OnInitializeInRuntime();
-            var journal = new AlbumJournal();
-            Projects = new ObservableCollection<Project>(journal.GetAllCurrentProjects());
+            LoadProjects();
         }
 
         private void NavigateProject(Project project)

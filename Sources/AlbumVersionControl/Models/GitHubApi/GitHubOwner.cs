@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using GitApi.Interfaces;
+using Octokit;
 
 namespace AlbumVersionControl.Models.GitHubApi
 {
@@ -28,6 +29,16 @@ namespace AlbumVersionControl.Models.GitHubApi
         {
             var client = GetClient(Connection);
             var repository = client.Repository.Get(Name, name).Result;
+            var gitHubRepository = new GitHubRepository(this);
+            gitHubRepository.Map(repository);
+            return gitHubRepository;
+        }
+
+        public IGitRepository CreateRepository(string name, string description)
+        {
+            var newRepository = new NewRepository(name) { AutoInit = true, Description = description };
+            var client = GetClient(Connection);
+            var repository = client.Repository.Create(newRepository).Result;
             var gitHubRepository = new GitHubRepository(this);
             gitHubRepository.Map(repository);
             return gitHubRepository;

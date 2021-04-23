@@ -21,12 +21,13 @@ namespace OctokitSamples
             //CreateRepository(client);
             //GetAllCommits(client);
             //CreateMainBranch(client);
-            //CreateCommit(client);
+            CreateCommit(client);
         }
 
         private static void CreateRepository(IGitHubClient client)
         {
-            var a = client.Repository.Create(new NewRepository("MyNewRepository1")).Result;
+            var newRepository = new NewRepository("MyNewRepository11") {AutoInit = true};
+            var a = client.Repository.Create(newRepository).Result;
         }
 
         private static void GetAllCommits(IGitHubClient client)
@@ -58,46 +59,28 @@ namespace OctokitSamples
 
         private static void CreateCommit(GitHubClient client)
         {
-            const string repositoryName = "MyNewRepository";
-
-
-            //var lastCommit = client.Repository.Commit.Get(Owner, repositoryName, "HEAD").Result;
-            //var newCommit1 = new NewCommit("Commit test with several files", "heads");
-            //var commit2 = client.Git.Commit.Create(Owner, repositoryName, newCommit1).Result;
-
-
-
-            var repository = client.Repository.Get(Owner, repositoryName).Result;
-            var repositoryAlb = client.Repository.Get(Owner, "AlbumVersionControl").Result;
-            
-            //var trrr = client.Git.Tree.Create(Owner, repositoryName, ).Result;
-
-            var refs = client.Git.Reference.GetAll(Owner, repositoryName).Result;
-            var master = client.Git.Reference.Get(Owner, repositoryName, "").Result;
-            var res = client.Git.Reference.Create(Owner, repository.Name, new NewReference("refs/heads/master", "6ef19b41225c5369f1c104d45d8d85efa9b057b53b14b4b9b939dd74decc5321")).Result;
-
+            const string repositoryName = "MyNewRepository11";
 
             // 1. Get the SHA of the latest commit of the master branch.
-            const string headMasterRef = "heads/master";
-            //var masterReference =
-            //    client.Git.Reference.Get(Owner, repositoryName, headMasterRef).Result; // Get reference of master branch
-            //var latestCommit = client.Git.Commit.Get(Owner, repositoryName,
-            //    "4b825dc642cb6eb9a060e54bf8d69288fbee4904").Result; // Get the laster commit of this branch
+            var headMasterRef = "heads/main";
+            var masterReference =
+                client.Git.Reference.Get(Owner, repositoryName, headMasterRef).Result; // Get reference of master branch
+            var latestCommit = client.Git.Commit.Get(Owner, repositoryName,
+                masterReference.Object.Sha).Result; // Get the laster commit of this branch
+            var nt = new NewTree {BaseTree = latestCommit.Tree.Sha};
 
             //2. Create the blob(s) corresponding to your file(s)
             var textBlob = new NewBlob {Encoding = EncodingType.Utf8, Content = "Hellow World!"};
             var textBlobRef = client.Git.Blob.Create(Owner, repositoryName, textBlob);
 
             // 3. Create a new tree with:
-            var nt = new NewTree {BaseTree = "6ef19b41225c5369f1c104d45d8d85efa9b057b53b14b4b9b939dd74decc5321" };
             nt.Tree.Add(new NewTreeItem
-                {Path = @"Test.txt", Mode = "100644", Type = TreeType.Blob, Sha = "6ef19b41225c5369f1c104d45d8d85efa9b057b53b14b4b9b939dd74decc5321" });
+                {Path = "Test.txt", Mode = "100644", Type = TreeType.Blob, Sha = textBlobRef.Result.Sha});
             var newTree = client.Git.Tree.Create(Owner, repositoryName, nt).Result;
 
             // 4. Create the commit with the SHAs of the tree and the reference of master branch
             // Create Commit
-
-            var newCommit = new NewCommit("Commit test with several files", newTree.Sha, "6ef19b41225c5369f1c104d45d8d85efa9b057b53b14b4b9b939dd74decc5321");
+            var newCommit = new NewCommit("Commit test with several files", newTree.Sha, masterReference.Object.Sha);
             var commit = client.Git.Commit.Create(Owner, repositoryName, newCommit).Result;
 
             // 5. Update the reference of master branch with the SHA of the commit
