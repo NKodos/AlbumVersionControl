@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using AlbumVersionControl.Configs;
 using AlbumVersionControl.Models;
 using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
@@ -71,7 +73,8 @@ namespace AlbumVersionControl.ViewModels
             {
                 var journal = new AlbumJournal();
                 journal.LoadFiles(SelectedVersion.CommitDetail.Key, SelectedVersion.CommitDetail.Value);
-                System.Diagnostics.Process.Start("explorer.exe", AlbumJournal.FolderPath);
+                var folderPath = new AppConfiguration().VersionContentFolder;
+                Process.Start($"file://{folderPath}");
             }
         }
 

@@ -13,8 +13,14 @@ namespace AlbumVersionControl.Models
 {
     public class AlbumJournal
     {
+        public readonly string VersionContentFolder;
+
         private GitHubConnection _connection;
-        public const string FolderPath = @"C:\Users\User\Desktop\VersionContent";
+
+        public AlbumJournal()
+        {
+            VersionContentFolder = new AppConfiguration().VersionContentFolder;
+        }
 
         public List<Project> GetAllCurrentProjects()
         {
@@ -30,9 +36,9 @@ namespace AlbumVersionControl.Models
             ClearFolder();
             GetConnectionFromConfig();
             var service = new GitHubService(_connection);
-            foreach (var file in service.GetCommitFiles(repositoryId, reference))
+            foreach (var content in service.GetRepositoryContent(repositoryId, reference))
             {
-                DownloadFile(file);
+                DownloadFile(content);
             }
         }
 
@@ -41,7 +47,7 @@ namespace AlbumVersionControl.Models
             GetConnectionFromConfig();
             var service = new GitHubService(_connection);
             var owner = service.GetOwner(_connection.Login);
-            var repository = owner.CreateRepository(name, description);
+            owner.CreateRepository(name, description);
         }
 
         private static List<Project> ConvertGitHubRepositoriesToProject(IEnumerable<IGitRepository> repositories)
@@ -80,18 +86,19 @@ namespace AlbumVersionControl.Models
             return commits?.ConvertToVersions(currentProject);
         }
 
-        private void DownloadFile(GitHubCommitFile file)
+        private void DownloadFile(RepositoryContent content)
         {
+            if (content.DownloadUrl == null) return;
             using (var client = new WebClient())
             {
-                var fileName = Path.GetFileName(file.Filename);
-                client.DownloadFile(file.RawUrl, $"{FolderPath}/{fileName}");
+                var fileName = Path.GetFileName(content.Name);
+                client.DownloadFile(content.DownloadUrl, $"{VersionContentFolder}/{fileName}");
             }
         }
 
         private void ClearFolder()
         {
-            var di = new DirectoryInfo(FolderPath);
+            var di = new DirectoryInfo(VersionContentFolder);
 
             foreach (var file in di.GetFiles())
             {

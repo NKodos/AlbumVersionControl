@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using GitApi.Interfaces;
 using Octokit;
@@ -43,11 +45,10 @@ namespace AlbumVersionControl.Models.GitHubApi
             return gitHubCommit;
         }
 
-        public IReadOnlyList<GitHubCommitFile> GetCommitFiles(long repositoryId, string reference)
+        public IReadOnlyList<RepositoryContent> GetRepositoryContent(long repositoryId, string reference)
         {
             var client = GetClient(Connection);
-            var commit = client.Repository.Commit.Get(repositoryId, reference).Result;
-            return commit.Files;
+            return client.Repository.Content.GetAllContentsByRef(repositoryId, reference).Result;
         }
     }
 }

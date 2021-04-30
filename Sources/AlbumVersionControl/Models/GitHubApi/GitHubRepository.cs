@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using AlbumVersionControl.Configs;
 using GitApi.Interfaces;
 using Octokit;
 using FileMode = Octokit.FileMode;
@@ -46,7 +47,7 @@ namespace AlbumVersionControl.Models.GitHubApi
                 masterReference.Object.Sha).Result;
             var nt = new NewTree { BaseTree = latestCommit.Tree.Sha };
 
-            foreach (var filePath in Directory.GetFiles(AlbumJournal.FolderPath))
+            foreach (var filePath in Directory.GetFiles(new AppConfiguration().VersionContentFolder))
             {
                 var textBlob = new NewBlob { Encoding = EncodingType.Utf8, Content = File.ReadAllText(filePath) };
                 var textBlobRef = client.Git.Blob.Create(Owner.Name, Name, textBlob);

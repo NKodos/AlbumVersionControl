@@ -55,6 +55,8 @@
                 <dxg:GridColumn FieldName="Author" Header="Автор" IsSmart="True"/>
                 <dxg:GridColumn FieldName="Id" Header="Id" IsSmart="True" Visible="False"/>
                 <dxg:GridColumn FieldName="CommitDetail" IsSmart="True" Visible="False"/>
+                <dxg:GridColumn FieldName="Project" IsSmart="True" Visible="False"/>
+                <dxg:GridColumn FieldName="GitCommit" IsSmart="True" Visible="False"/>
             </dxg:GridControl>
         </Grid>
     </dxwui:PageAdornerControl>

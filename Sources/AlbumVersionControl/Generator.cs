@@ -1,25 +1,25 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Configuration;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using AlbumVersionControl.Configs;
+using AlbumVersionControl.Models;
 
 namespace AlbumVersionControl
 {
     public static class Generator
     {
-        public const string FolderPath = @"C:\Users\User\Desktop\VersionContent";
-
         public static void Generate()
         {
-            var xsdFiles = Directory.GetFiles(FolderPath, "*.xsd")
-                .ToList();
 
-            var fileArguments = xsdFiles.Aggregate("", (current, xsdFile) => current + (Path.GetFileName(xsdFile) + " "));
-
-            var commandLine = $"/C ..\\xsd {fileArguments} /classes";
-
-            var p = new ProcessStartInfo("cmd.exe")
+            var generatedClassesFolder = new AppConfiguration().GeneratedClassesFolder;
+            var xsdFiles = Directory.GetFiles(generatedClassesFolder, "*.xsd").ToList();
+            var fileArguments = xsdFiles.Aggregate("", (current, xsdFile) => current + xsdFile + " ");
+            var commandLine = $"{fileArguments} /classes /o:{generatedClassesFolder}";
+            var p = new ProcessStartInfo("xsd.exe")
             {
-                Arguments = commandLine, WorkingDirectory = FolderPath
+                Arguments = commandLine, WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory
             };
             Process.Start(p);
         }
