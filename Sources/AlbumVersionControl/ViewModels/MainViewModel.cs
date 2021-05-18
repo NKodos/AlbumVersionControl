@@ -26,14 +26,14 @@ namespace AlbumVersionControl.ViewModels
             newCommitDialog.ShowDialog();
             if (newCommitDialog.DialogResult != null && (bool)newCommitDialog.DialogResult)
             {
-                Global.ProjectViewModel?.CreateNewVersion(newCommitDialog.Message);
+                Program.ProjectViewModel?.CreateNewVersion(newCommitDialog.Message);
             }
         }
 
         [Command]
         public void OpenVersionFolder()
         {
-            Global.ProjectViewModel?.OpenCuerrentVersionFolder();
+            Program.ProjectViewModel?.OpenCuerrentVersionFolder();
         }
 
         [Command]
@@ -49,8 +49,7 @@ namespace AlbumVersionControl.ViewModels
             newProjectDialog.ShowDialog();
             if (newProjectDialog.DialogResult != null && (bool)newProjectDialog.DialogResult)
             {
-                var journal = new AlbumJournal();
-                journal.CreateProject(newProjectDialog.ProjectName, newProjectDialog.ProjectDescription);
+                Program.GitHubService.CreateProject(newProjectDialog.ProjectName, newProjectDialog.ProjectDescription);
 
                 if (NavigationService.Current is ProjectJournalViewModel projectJournalViewModel)
                 {

@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using AlbumVersionControl.Configs;
 using AlbumVersionControl.Models;
+using AlbumVersionControl.Models.GitHubApi;
 using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
 
@@ -35,7 +36,7 @@ namespace AlbumVersionControl.ViewModels
 
         protected override void OnParameterChanged(object parameter)
         {
-            Global.ProjectViewModel = this;
+            Program.ProjectViewModel = this;
             if (parameter == null) parameter = new Project();
             if (!(parameter is Project currentProject))
                 throw new ArgumentException("Parameter type unknown", nameof(parameter));
@@ -71,8 +72,8 @@ namespace AlbumVersionControl.ViewModels
         {
             if (SelectedVersion != null)
             {
-                var journal = new AlbumJournal();
-                journal.LoadFiles(SelectedVersion.CommitDetail.Key, SelectedVersion.CommitDetail.Value);
+                var gitHubContent = new GitHubContent(Program.GitHubService);
+                gitHubContent.LoadFiles(SelectedVersion.CommitDetail.Key, SelectedVersion.CommitDetail.Value);
                 var folderPath = new AppConfiguration().VersionContentFolder;
                 Process.Start($"file://{folderPath}");
             }
@@ -85,8 +86,7 @@ namespace AlbumVersionControl.ViewModels
 
         private void LoadVersions()
         {
-            var journal = new AlbumJournal();
-            var versions = journal.GetProjectVersions(CurrentProject);
+            var versions = CurrentProject.GetProjectVersions();
             Versions = new ObservableCollection<ProjectVersion>(versions);
         }
     }

@@ -89,11 +89,11 @@
     <Compile Include="Configs\GitHubConnectionConfigSection.cs" />
     <Compile Include="Configs\GitHubConnectionElement.cs" />
     <Compile Include="Extensions\GitHubCommitExtension.cs" />
+    <Compile Include="Extensions\GitHubConnectionExtension.cs" />
     <Compile Include="Extensions\ProjectExtension.cs" />
     <Compile Include="Generator.cs" />
-    <Compile Include="Global.cs" />
-    <Compile Include="Models\AlbumJournal.cs" />
-    <Compile Include="Models\Converter.cs" />
+    <Compile Include="Models\GitHubApi\GitHubContent.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Models\GitHubApi\GitHubCommit.cs" />
     <Compile Include="Models\GitHubApi\GitHubConnection.cs" />
     <Compile Include="Models\GitHubApi\GitHubObject.cs" />

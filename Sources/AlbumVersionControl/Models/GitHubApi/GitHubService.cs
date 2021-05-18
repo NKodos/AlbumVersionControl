@@ -50,5 +50,16 @@ namespace AlbumVersionControl.Models.GitHubApi
             var client = GetClient(Connection);
             return client.Repository.Content.GetAllContentsByRef(repositoryId, reference).Result;
         }
+
+        public IGitOwner GetCurrentOwner()
+        {
+            return GetOwner(Connection.Login);
+        }
+
+        public void CreateProject(string name, string description)
+        {
+            var owner = GetCurrentOwner();
+            owner.CreateRepository(name, description);
+        }
     }
 }

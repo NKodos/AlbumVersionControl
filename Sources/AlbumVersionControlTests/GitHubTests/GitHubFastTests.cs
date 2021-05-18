@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using AlbumVersionControl.Configs;
 using AlbumVersionControl.Models.GitHubApi;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using AlbumVersionControl.Configs;
-using AlbumVersionControl.Models;
 
 namespace AlbumVersionControl
 {
@@ -12,7 +10,6 @@ namespace AlbumVersionControl
     {
         public static void Generate()
         {
-
             var generatedClassesFolder = new AppConfiguration().GeneratedClassesFolder;
             var xsdFiles = Directory.GetFiles(generatedClassesFolder, "*.xsd").ToList();
             var fileArguments = xsdFiles.Aggregate("", (current, xsdFile) => current + xsdFile + " ");
