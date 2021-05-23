@@ -30,6 +30,9 @@
                         <dxb:BarButtonItem Content="Показать содержимое" RibbonStyle="Large" LargeGlyph="{dx:DXImage SvgImages/Actions/Open.svg}" Command="{Binding OpenVersionFolderCommand}"/>
                         <dxb:BarButtonItem Content="Сгенерировать классы" RibbonStyle="Large" Command="{Binding GenerateClassesCommand}" LargeGlyph="{dx:DXImage SvgImages/RichEdit/ShowAllFieldCodes.svg}"/>
                     </dxr:RibbonPageGroup>
+                    <dxr:RibbonPageGroup Caption="Настройки программы">
+                        <dxb:BarButtonItem Content="Авторизация" RibbonStyle="Large" Command="{Binding ShowAuthorizationWindowCommand}" LargeGlyph="{dx:DXImage SvgImages/Business Objects/BO_User.svg}"/>
+                    </dxr:RibbonPageGroup>
                 </dxr:RibbonPage>
                 
             </dxr:RibbonDefaultPageCategory>
@@ -37,7 +40,8 @@
 
         <dxr:RibbonStatusBarControl DockPanel.Dock="Bottom" Margin="0,20,0,0">
         </dxr:RibbonStatusBarControl>
-        <dxwui:NavigationFrame Name="NavigationFrame" AnimationType="SlideHorizontal" NavigationCacheMode="Required">
+        
+        <dxwui:NavigationFrame Name="NavigationFrame" NavigationCacheMode="Required" AnimationType="SlideHorizontal">
             <dxmvvm:Interaction.Triggers>
                 <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding OnViewLoadedCommand}" />
             </dxmvvm:Interaction.Triggers>

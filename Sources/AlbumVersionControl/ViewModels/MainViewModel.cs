@@ -57,5 +57,12 @@ namespace AlbumVersionControl.ViewModels
                 }
             }
         }
+
+        [Command]
+        public void ShowAuthorizationWindow()
+        {
+            var authorizationWindow = new AuthorizationWindow();
+            authorizationWindow.ShowDialog();
+        }
     }
 }

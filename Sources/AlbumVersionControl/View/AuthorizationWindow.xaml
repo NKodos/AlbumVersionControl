@@ -1,0 +1,100 @@
+﻿<Window x:Class="AlbumVersionControl.View.AuthorizationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AlbumVersionControl"
+        mc:Ignorable="d"
+        Title="Авторизация" Height="550" Width="450" SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource WindowBackgroundBrush}" ResizeMode="NoResize" WindowStyle="None"
+        AllowsTransparency="True">
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Window.Resources>
+
+    <Border Style="{StaticResource CoreBorderStyle}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="48" />
+                <RowDefinition Height="1" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center"
+                            Margin="8,0,0,0" Height="40">
+                    <!--<Path Width="19.5" Height="28.5" Margin="20,0,12,0" Stretch="Fill" HorizontalAlignment="Center"
+                          VerticalAlignment="Center" Fill="{StaticResource ThemeColorBrush}"
+                          Data="F1 M 25,27L 46,19L 46,22.25L 28.5,29L 31.75,31.25L 51,23.75L 51,48.5L 31.75,57L 25,52L 25,27 Z " />-->
+                </StackPanel>
+                <Thumb Opacity="0" Background="Transparent" Foreground="{x:Null}" DragDelta="Thumb_OnDragDelta" />
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right"
+                            Margin="0,0,8,0">
+                    <Button ToolTip="Close" Width="32" Height="28" Style="{StaticResource WindowActionButtonClose}"
+                            Click="btnActionClose_Click">
+                        <Path Width="10" Height="10" Stretch="Fill"
+                              Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}"
+                              Data="F1 M 26.9166,22.1667L 37.9999,33.25L 49.0832,22.1668L 53.8332,26.9168L 42.7499,38L 53.8332,49.0834L 49.0833,53.8334L 37.9999,42.75L 26.9166,53.8334L 22.1666,49.0833L 33.25,38L 22.1667,26.9167L 26.9166,22.1667 Z " />
+                    </Button>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="1" Background="{StaticResource MainWindowSplitBorderBrush}" />
+            <Grid Grid.Row="2">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0" Name="LocalLoginGrid" Visibility="Visible" Width="380">
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                            <Label Content="Авторизация" Margin="0,4,0,12" HorizontalAlignment="Center"
+                                   Foreground="{DynamicResource MainBlackFontColor}" FontFamily="Segoe UI Semilight"
+                                   FontSize="26" />
+
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+                                <RadioButton Name="QuestRadioButton" GroupName="LoginType" Content="Гостевой" Margin="0,0,10,0" 
+                                             Foreground="{DynamicResource MainBlackFontColor}"/>
+                                <RadioButton Name="TokenRadioButton" GroupName="LoginType" Content="Через токен" IsChecked="True" Margin="0,0,10,0" 
+                                             Foreground="{DynamicResource MainBlackFontColor}"/>
+                                <RadioButton Name="LoginPasswordRadioButton" GroupName="LoginType" Content="Логин пароль" Margin="0,0,10,0" 
+                                             Foreground="{DynamicResource MainBlackFontColor}"/>
+                            </StackPanel>
+
+                            <Grid Margin="0,0,0,8">
+                                <TextBlock Margin="4,1,2,0" VerticalAlignment="Center" TextAlignment="Center"
+                                           FontSize="16" Height="22" Text="Логин"
+                                           Foreground="{StaticResource UserControlButtonIsPressedBrush}"
+                                           Visibility="{Binding ElementName=LocalUserNameTextBox, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                <TextBox Style="{StaticResource LoginTextBoxStyle}" Name="LocalUserNameTextBox"
+                                         CharacterCasing="Lower" TabIndex="4" />
+                            </Grid>
+
+                            <Grid Margin="0,0,0,8" 
+                                  Visibility="{Binding ElementName=LoginPasswordRadioButton, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <PasswordBox Background="Transparent" HorizontalContentAlignment="Center"
+                                             BorderBrush="{StaticResource MainBlackFontColor}"
+                                             HorizontalAlignment="Center" VerticalContentAlignment="Center"
+                                             Name="LocalPasswordBox" Height="36" Width="220"
+                                             TabIndex="5" BorderThickness="1"/>
+                            </Grid>
+
+                            <Grid Margin="0,0,0,8" 
+                                  Visibility="{Binding ElementName=TokenRadioButton, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <TextBlock Margin="4,1,2,0" VerticalAlignment="Center" TextAlignment="Center"
+                                           FontSize="16" Height="22" Text="Токен"
+                                           Foreground="{StaticResource UserControlButtonIsPressedBrush}"
+                                           Visibility="{Binding ElementName=TokenTextBox, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                </TextBlock>
+                                <TextBox Style="{StaticResource LoginTextBoxStyle}" Name="TokenTextBox"
+                                         CharacterCasing="Lower" TabIndex="4" />
+                            </Grid>
+
+                            <Button Name="LocalLoginButton" Content="Подключиться" Width="220" Height="36" Margin="0,10,0,32"
+                                    TabIndex="8" />
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>
