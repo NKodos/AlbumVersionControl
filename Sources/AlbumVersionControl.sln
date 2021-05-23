@@ -10,8 +10,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OctokitSamples", "OctokitSamples\OctokitSamples.csproj", "{5552A7CB-76D0-417E-970B-C29C0207B6BB}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9A34C8FC-993C-410A-A441-6BFEB0E36B18}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlbumVersionControlTests", "AlbumVersionControlTests\AlbumVersionControlTests.csproj", "{C775D40F-4C2A-4C73-BBEF-0247D5FFEAA3}"
@@ -28,10 +26,6 @@ Global
 		{88CB5D71-97B9-4D0B-94B7-F0C987C57FC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88CB5D71-97B9-4D0B-94B7-F0C987C57FC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88CB5D71-97B9-4D0B-94B7-F0C987C57FC8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5552A7CB-76D0-417E-970B-C29C0207B6BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5552A7CB-76D0-417E-970B-C29C0207B6BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5552A7CB-76D0-417E-970B-C29C0207B6BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5552A7CB-76D0-417E-970B-C29C0207B6BB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C775D40F-4C2A-4C73-BBEF-0247D5FFEAA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C775D40F-4C2A-4C73-BBEF-0247D5FFEAA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C775D40F-4C2A-4C73-BBEF-0247D5FFEAA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
