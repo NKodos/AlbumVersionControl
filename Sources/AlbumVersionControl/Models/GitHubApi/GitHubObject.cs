@@ -13,8 +13,32 @@ namespace AlbumVersionControl.Models.GitHubApi
 
         public GitHubClient GetClient(IGitConnection connection)
         {
-            if (_client != null) return _client;
+            try
+            {
+                if (_client != null) return _client;
 
+                CreatNewClient(connection);
+
+                var user = connection.ConnectionType == GitConnectionType.Guest 
+                    ?_client.User.Get(connection.Login).Result
+                    :_client.User.Current().Result;
+
+                if (connection.ConnectionType == GitConnectionType.Oauth)
+                {
+                    connection.Login = user.Login;
+                }
+
+                return _client;
+            }
+            catch
+            {
+                _client = null;
+                throw;
+            }
+        }
+
+        protected virtual GitHubClient CreatNewClient(IGitConnection connection)
+        {
             _client = new GitHubClient(new ProductHeaderValue(ProjectName));
 
             switch (connection.ConnectionType)
@@ -22,7 +46,8 @@ namespace AlbumVersionControl.Models.GitHubApi
                 case GitConnectionType.Guest:
                     break;
                 case GitConnectionType.Basic:
-                    _client.Credentials = new Credentials(connection.Login, connection.Password, AuthenticationType.Basic);
+                    _client.Credentials =
+                        new Credentials(connection.Login, connection.Password, AuthenticationType.Basic);
                     break;
                 case GitConnectionType.Oauth:
                     _client.Credentials = new Credentials(connection.Token, AuthenticationType.Oauth);
@@ -31,7 +56,6 @@ namespace AlbumVersionControl.Models.GitHubApi
                     throw new ArgumentOutOfRangeException();
             }
 
-            var user = _client.User.Current().Result;
             return _client;
         }
     }

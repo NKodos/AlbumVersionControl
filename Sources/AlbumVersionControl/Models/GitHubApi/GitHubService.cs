@@ -1,7 +1,6 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+using System.Windows.Controls;
 using GitApi.Interfaces;
 using Octokit;
 
@@ -19,11 +18,15 @@ namespace AlbumVersionControl.Models.GitHubApi
             var user = client.User.Current().Result;
         }
 
+        public void Connect(IGitConnection connection)
+        {
+            Connection = connection;
+            GetClient(Connection);
+        }
+
         public override IGitOwner GetOwner(string name)
         {
-            var client = GetClient(Connection);
-            var user = client.User.Current().Result;
-            return new GitHubOwner(user.Login, Connection);
+            return new GitHubOwner(name, Connection);
         }
 
         public override IGitRepository GetRepository(long repositoryId)

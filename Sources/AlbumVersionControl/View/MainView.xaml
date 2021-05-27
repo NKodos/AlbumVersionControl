@@ -7,40 +7,56 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
     xmlns:dxwui="http://schemas.devexpress.com/winfx/2008/xaml/windowsui"
-    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm" 
+    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
     xmlns:dxwuin="http://schemas.devexpress.com/winfx/2008/xaml/windowsui/navigation"
     xmlns:viewModels="clr-namespace:AlbumVersionControl.ViewModels"
+    xmlns:view="clr-namespace:AlbumVersionControl.View"
     Height="Auto" Width="Auto" MinWidth="700" MinHeight="400"
     mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
     DataContext="{dxmvvm:ViewModelSource viewModels:MainViewModel}">
-    
+
+
+    <dxmvvm:Interaction.Behaviors>
+        <dxmvvm:WindowService />
+    </dxmvvm:Interaction.Behaviors>
+
     <DockPanel LastChildFill="True">
         <dxr:RibbonControl DockPanel.Dock="Top" RibbonStyle="Office2019">
             <dxr:RibbonDefaultPageCategory>
                 <dxr:RibbonPage Caption="Главная">
                     <dxr:RibbonPageGroup Caption="Проекты">
-                        <dxb:BarButtonItem Content="Создать" RibbonStyle="Large" Command="{Binding CreateProjectCommand}" LargeGlyph="{dx:DXImage SvgImages/Outlook Inspired/AddFile.svg}"/>
-                        <dxb:BarButtonItem Content="Настройки" RibbonStyle="Large" LargeGlyph="{dx:DXImage SvgImages/Icon Builder/Actions_Settings.svg}"/>
-                        <dxb:BarButtonItem Content="Удалить" RibbonStyle="Large" LargeGlyph="{dx:DXImage SvgImages/Snap/SnapDeleteList.svg}"/>
+                        <dxb:BarButtonItem Content="Создать" RibbonStyle="Large"
+                                           Command="{Binding CreateProjectCommand}"
+                                           LargeGlyph="{dx:DXImage SvgImages/Outlook Inspired/AddFile.svg}" />
+                        <dxb:BarButtonItem Content="Настройки" RibbonStyle="Large"
+                                           LargeGlyph="{dx:DXImage SvgImages/Icon Builder/Actions_Settings.svg}" />
+                        <dxb:BarButtonItem Content="Удалить" RibbonStyle="Large"
+                                           LargeGlyph="{dx:DXImage SvgImages/Snap/SnapDeleteList.svg}" />
                     </dxr:RibbonPageGroup>
                     <dxr:RibbonPageGroup Caption="Версии">
-                        <dxb:BarButtonItem Content="Создать новую" RibbonStyle="Large" Command="{Binding CreateNewVersionCommand}" LargeGlyph="{dx:DXImage SvgImages/Edit/Copy.svg}"/>
-                        <dxb:BarButtonItem Content="Показать содержимое" RibbonStyle="Large" LargeGlyph="{dx:DXImage SvgImages/Actions/Open.svg}" Command="{Binding OpenVersionFolderCommand}"/>
-                        <dxb:BarButtonItem Content="Сгенерировать классы" RibbonStyle="Large" Command="{Binding GenerateClassesCommand}" LargeGlyph="{dx:DXImage SvgImages/RichEdit/ShowAllFieldCodes.svg}"/>
+                        <dxb:BarButtonItem Content="Создать новую" RibbonStyle="Large"
+                                           Command="{Binding CreateNewVersionCommand}"
+                                           LargeGlyph="{dx:DXImage SvgImages/Edit/Copy.svg}" />
+                        <dxb:BarButtonItem Content="Показать содержимое" RibbonStyle="Large"
+                                           LargeGlyph="{dx:DXImage SvgImages/Actions/Open.svg}"
+                                           Command="{Binding OpenVersionFolderCommand}" />
+                        <dxb:BarButtonItem Content="Сгенерировать классы" RibbonStyle="Large"
+                                           Command="{Binding GenerateClassesCommand}"
+                                           LargeGlyph="{dx:DXImage SvgImages/RichEdit/ShowAllFieldCodes.svg}" />
                     </dxr:RibbonPageGroup>
                     <dxr:RibbonPageGroup Caption="Настройки программы">
-                        <dxb:BarButtonItem Content="Авторизация" RibbonStyle="Large" Command="{Binding ShowAuthorizationWindowCommand}" LargeGlyph="{dx:DXImage SvgImages/Business Objects/BO_User.svg}"/>
+                        <dxb:BarButtonItem Content="Авторизация" RibbonStyle="Large"
+                                           Command="{Binding ShowAuthorizationWindowCommand}"
+                                           LargeGlyph="{dx:DXImage SvgImages/Business Objects/BO_User.svg}" />
                     </dxr:RibbonPageGroup>
                 </dxr:RibbonPage>
-                
+
             </dxr:RibbonDefaultPageCategory>
         </dxr:RibbonControl>
 
-        <dxr:RibbonStatusBarControl DockPanel.Dock="Bottom" Margin="0,20,0,0">
-        </dxr:RibbonStatusBarControl>
-        
+        <dxr:RibbonStatusBarControl DockPanel.Dock="Bottom" Margin="0,20,0,0" />
+
         <dxwui:NavigationFrame Name="NavigationFrame" NavigationCacheMode="Required" AnimationType="SlideHorizontal">
             <dxmvvm:Interaction.Triggers>
                 <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding OnViewLoadedCommand}" />
@@ -49,6 +65,6 @@
                 <dxwuin:FrameNavigationService />
             </dxmvvm:Interaction.Behaviors>
         </dxwui:NavigationFrame>
-        
+
     </DockPanel>
 </UserControl>

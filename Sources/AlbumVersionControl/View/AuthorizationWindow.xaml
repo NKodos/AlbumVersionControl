@@ -3,15 +3,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:AlbumVersionControl"
+        xmlns:local="clr-namespace:AlbumVersionControl" 
+        xmlns:converters="clr-namespace:AlbumVersionControl.Converters"
         mc:Ignorable="d"
         Title="Авторизация" Height="550" Width="450" SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterScreen"
         Background="{DynamicResource WindowBackgroundBrush}" ResizeMode="NoResize" WindowStyle="None"
-        AllowsTransparency="True">
+        AllowsTransparency="True" Loaded="Window_Loaded">
 
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <converters:MultiBooleanToVisibilityConverterOr x:Key="MultiBooleanToVisibilityConverterOr" />
     </Window.Resources>
 
     <Border Style="{StaticResource CoreBorderStyle}">
@@ -24,9 +26,6 @@
             <Grid Grid.Row="0">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center"
                             Margin="8,0,0,0" Height="40">
-                    <!--<Path Width="19.5" Height="28.5" Margin="20,0,12,0" Stretch="Fill" HorizontalAlignment="Center"
-                          VerticalAlignment="Center" Fill="{StaticResource ThemeColorBrush}"
-                          Data="F1 M 25,27L 46,19L 46,22.25L 28.5,29L 31.75,31.25L 51,23.75L 51,48.5L 31.75,57L 25,52L 25,27 Z " />-->
                 </StackPanel>
                 <Thumb Opacity="0" Background="Transparent" Foreground="{x:Null}" DragDelta="Thumb_OnDragDelta" />
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right"
@@ -51,6 +50,11 @@
                                    Foreground="{DynamicResource MainBlackFontColor}" FontFamily="Segoe UI Semilight"
                                    FontSize="26" />
 
+                            <TextBlock Name="OkMessageTextBlock" Margin="4,1,2,10" VerticalAlignment="Center" TextAlignment="Center" 
+                                       TextWrapping="Wrap" FontSize="16" Text="Все Ок!" Foreground="MediumSeaGreen" Visibility="Collapsed"/>
+                            <TextBlock Name="ErrorMessageTextBlock" Margin="4,1,2,10" VerticalAlignment="Center" TextAlignment="Center" 
+                                       TextWrapping="Wrap" FontSize="16" Text="Ошибка!" Foreground="Red" Visibility="Collapsed"/>
+
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
                                 <RadioButton Name="QuestRadioButton" GroupName="LoginType" Content="Гостевой" Margin="0,0,10,0" 
                                              Foreground="{DynamicResource MainBlackFontColor}"/>
@@ -61,6 +65,12 @@
                             </StackPanel>
 
                             <Grid Margin="0,0,0,8">
+                                <Grid.Visibility>
+                                    <MultiBinding Converter="{StaticResource MultiBooleanToVisibilityConverterOr}">
+                                        <Binding ElementName="QuestRadioButton" Path="IsChecked" />
+                                        <Binding ElementName="LoginPasswordRadioButton" Path="IsChecked" />
+                                    </MultiBinding>
+                                </Grid.Visibility>
                                 <TextBlock Margin="4,1,2,0" VerticalAlignment="Center" TextAlignment="Center"
                                            FontSize="16" Height="22" Text="Логин"
                                            Foreground="{StaticResource UserControlButtonIsPressedBrush}"
@@ -85,12 +95,11 @@
                                            Foreground="{StaticResource UserControlButtonIsPressedBrush}"
                                            Visibility="{Binding ElementName=TokenTextBox, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 </TextBlock>
-                                <TextBox Style="{StaticResource LoginTextBoxStyle}" Name="TokenTextBox"
-                                         CharacterCasing="Lower" TabIndex="4" />
+                                <TextBox Style="{StaticResource LoginTextBoxStyle}" Name="TokenTextBox" TabIndex="4" TextWrapping="NoWrap" />
                             </Grid>
 
-                            <Button Name="LocalLoginButton" Content="Подключиться" Width="220" Height="36" Margin="0,10,0,32"
-                                    TabIndex="8" />
+                            <Button Name="LocalLoginButton" Content="Подключиться" Width="220" Height="36" Margin="0,10,0,30"
+                                    TabIndex="8" Click="LocalLoginButton_Click" />
                         </StackPanel>
                     </Grid>
                 </Grid>

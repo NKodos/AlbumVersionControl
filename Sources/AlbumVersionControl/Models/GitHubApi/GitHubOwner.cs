@@ -47,7 +47,7 @@ namespace AlbumVersionControl.Models.GitHubApi
         public IEnumerable<IGitRepository> GetRepositories()
         {
             var client = GetClient(Connection);
-            var repositoryList = client.Repository.GetAllForCurrent().Result;
+            var repositoryList = client.Repository.GetAllForUser(Connection.Login).Result;
             return repositoryList.ToList().Select(repository =>
             {
                 var gitHubRepository = new GitHubRepository(this);

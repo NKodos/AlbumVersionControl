@@ -1,4 +1,7 @@
-﻿using AlbumVersionControl.Models;
+﻿using System.Configuration;
+using AlbumVersionControl.Configs;
+using AlbumVersionControl.Extensions;
+using AlbumVersionControl.Models.GitHubApi;
 using AlbumVersionControl.View;
 using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
@@ -7,16 +10,14 @@ namespace AlbumVersionControl.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-        private INavigationService NavigationService { get { return this.GetService<INavigationService>(); } }
+        private INavigationService NavigationService { get { return GetService<INavigationService>(); } }
 
-        public MainViewModel()
-        {
-            
-        }
+        protected IWindowService WindowService { get { return GetService<IWindowService>(); } }
 
         public void OnViewLoaded()
         {
-            NavigationService.Navigate("ProjectJournalView", null, this);
+            InitializeGitHubService();
+            LoadProjectJournalIfConnected();
         }
 
         [Command]
@@ -24,16 +25,20 @@ namespace AlbumVersionControl.ViewModels
         {
             var newCommitDialog = new NewCommitDialogView();
             newCommitDialog.ShowDialog();
-            if (newCommitDialog.DialogResult != null && (bool)newCommitDialog.DialogResult)
+            if (newCommitDialog.DialogResult != null && newCommitDialog.DialogResult.Value &&
+                NavigationService.Current is ProjectViewModel projectViewModel)
             {
-                Program.ProjectViewModel?.CreateNewVersion(newCommitDialog.Message);
+                projectViewModel.CreateNewVersion(newCommitDialog.Message);
             }
         }
 
         [Command]
         public void OpenVersionFolder()
         {
-            Program.ProjectViewModel?.OpenCuerrentVersionFolder();
+            if (NavigationService.Current is ProjectViewModel projectViewModel)
+            {
+                projectViewModel.OpenCuerrentVersionFolder();
+            }
         }
 
         [Command]
@@ -46,8 +51,8 @@ namespace AlbumVersionControl.ViewModels
         public void CreateProject()
         {
             var newProjectDialog = new NewProjcetDialogView();
-            newProjectDialog.ShowDialog();
-            if (newProjectDialog.DialogResult != null && (bool)newProjectDialog.DialogResult)
+            var result = newProjectDialog.ShowDialog();
+            if (result != null && result.Value)
             {
                 Program.GitHubService.CreateProject(newProjectDialog.ProjectName, newProjectDialog.ProjectDescription);
 
@@ -59,10 +64,56 @@ namespace AlbumVersionControl.ViewModels
         }
 
         [Command]
-        public void ShowAuthorizationWindow()
+        public void ShowAuthorizationWindow(string errorMessage = null)
         {
-            var authorizationWindow = new AuthorizationWindow();
+            var authorizationWindow = errorMessage == null
+                ? new AuthorizationWindow()
+                : new AuthorizationWindow(errorMessage);
             authorizationWindow.ShowDialog();
+
+            if (authorizationWindow.IsConected)
+            {
+                LoadProjectJournal();
+            }
+        }
+
+        [Command]
+        public bool CheckGitHubConnection()
+        {
+            try
+            {
+                Program.GitHubService.Connect();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private static void InitializeGitHubService()
+        {
+            var section = (GitHubConnectionConfigSection)ConfigurationManager.GetSection("GitHubConnection");
+            var connectionFromConfig = section.GitHubConnectionItems?[0];
+            var connection = connectionFromConfig.ConvertToGitHubConnection();
+            Program.GitHubService = new GitHubService(connection);
+        }
+
+        private void LoadProjectJournal()
+        {
+            NavigationService.Navigate("ProjectJournalView", null, this);
+        }
+
+        private void LoadProjectJournalIfConnected()
+        {
+            if (CheckGitHubConnection())
+            {
+                LoadProjectJournal();
+            }
+            else
+            {
+                ShowAuthorizationWindow("Ошибка подключения.\nИзмените параметры входа.");
+            }
         }
     }
 }

@@ -36,7 +36,6 @@ namespace AlbumVersionControl.ViewModels
 
         protected override void OnParameterChanged(object parameter)
         {
-            Program.ProjectViewModel = this;
             if (parameter == null) parameter = new Project();
             if (!(parameter is Project currentProject))
                 throw new ArgumentException("Parameter type unknown", nameof(parameter));
