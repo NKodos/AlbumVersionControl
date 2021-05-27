@@ -7,16 +7,17 @@ namespace AlbumVersionControl.Models.GitHubApi
 {
     public class GitHubOwner : GitHubObject, IGitOwner
     {
-        public GitHubOwner()
+        public GitHubOwner(GitHubClient client)
         {
+            Client = client;
         }
 
-        public GitHubOwner(string name) : this()
+        public GitHubOwner(GitHubClient client, string name) : this(client)
         {
             Name = name;
         }
 
-        public GitHubOwner(string name, IGitConnection connection) : this(name)
+        public GitHubOwner(GitHubClient client, string name, IGitConnection connection) : this(client, name)
         {
             Connection = connection;
         }
@@ -27,9 +28,8 @@ namespace AlbumVersionControl.Models.GitHubApi
 
         public IGitRepository GetRepository(string name)
         {
-            var client = GetClient(Connection);
-            var repository = client.Repository.Get(Name, name).Result;
-            var gitHubRepository = new GitHubRepository(this);
+            var repository = Client.Repository.Get(Name, name).Result;
+            var gitHubRepository = new GitHubRepository(Client, this);
             gitHubRepository.Map(repository);
             return gitHubRepository;
         }
@@ -37,20 +37,18 @@ namespace AlbumVersionControl.Models.GitHubApi
         public IGitRepository CreateRepository(string name, string description)
         {
             var newRepository = new NewRepository(name) { AutoInit = true, Description = description };
-            var client = GetClient(Connection);
-            var repository = client.Repository.Create(newRepository).Result;
-            var gitHubRepository = new GitHubRepository(this);
+            var repository = Client.Repository.Create(newRepository).Result;
+            var gitHubRepository = new GitHubRepository(Client, this);
             gitHubRepository.Map(repository);
             return gitHubRepository;
         }
 
         public IEnumerable<IGitRepository> GetRepositories()
         {
-            var client = GetClient(Connection);
-            var repositoryList = client.Repository.GetAllForUser(Connection.Login).Result;
+            var repositoryList = Client.Repository.GetAllForUser(Connection.Login).Result;
             return repositoryList.ToList().Select(repository =>
             {
-                var gitHubRepository = new GitHubRepository(this);
+                var gitHubRepository = new GitHubRepository(Client, this);
                 gitHubRepository.Map(repository);
                 return gitHubRepository;
             });

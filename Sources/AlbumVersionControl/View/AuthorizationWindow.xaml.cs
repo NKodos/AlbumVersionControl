@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Configuration;
 using System.Windows;
 using System.Windows.Controls.Primitives;
+using AlbumVersionControl.Configs;
+using AlbumVersionControl.Extensions;
 using AlbumVersionControl.Models.GitHubApi;
+using GitApi.Interfaces;
 
 namespace AlbumVersionControl.View
 {
@@ -35,6 +39,22 @@ namespace AlbumVersionControl.View
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             ShowErrorMessage(_errorMessage);
+            ShowCurrentConnection();
+        }
+
+        private void ShowCurrentConnection()
+        {
+            var connection = GetConnectionFromConfig();
+            LocalUserNameTextBox.Text = connection.Login;
+            LocalPasswordBox.Password = connection.Password;
+            TokenTextBox.Text = connection.Token;
+        }
+
+        private static GitHubConnectionElement GetConnectionFromConfig()
+        {
+            var section = (GitHubConnectionConfigSection)ConfigurationManager.GetSection("GitHubConnection");
+            var connectionFromConfig = section.GitHubConnectionItems?[0];
+            return connectionFromConfig;
         }
 
         private void LocalLoginButton_Click(object sender, RoutedEventArgs e)
@@ -43,6 +63,7 @@ namespace AlbumVersionControl.View
             {
                 var connection = GetGitHubConnection();
                 Program.GitHubService.Connect(connection);
+                SaveSettings(connection);
                 IsConected = true;
                 ShowOkMessage("Подключение прошло успешно");
                 HideErrorMessage();
@@ -52,6 +73,24 @@ namespace AlbumVersionControl.View
                 IsConected = false;
                 ShowErrorMessage("Не удалось подключиться");
                 HideOkMessage();
+            }
+        }
+
+        private static void SaveSettings(IGitConnection connection)
+        {
+            var cfg = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            var section = (GitHubConnectionConfigSection)cfg.Sections["GitHubConnection"];
+            var connectionFromConfig = section.GitHubConnectionItems?[0];
+            if (connectionFromConfig != null)
+            {
+                System.Diagnostics.Debug.WriteLine(connectionFromConfig.Login);
+                connectionFromConfig.Login = connection.Login;
+                System.Diagnostics.Debug.WriteLine(connectionFromConfig.Password);
+                connectionFromConfig.Password = connection.Password;
+                System.Diagnostics.Debug.WriteLine(connectionFromConfig.Token);
+                connectionFromConfig.Token = connection.Token;
+                cfg.Save();
+                ConfigurationManager.RefreshSection("GitHubConnection");
             }
         }
 

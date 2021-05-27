@@ -1,6 +1,5 @@
 ﻿
 using System.Collections.Generic;
-using System.Windows.Controls;
 using GitApi.Interfaces;
 using Octokit;
 
@@ -14,49 +13,46 @@ namespace AlbumVersionControl.Models.GitHubApi
 
         public override void Connect()
         {
-            var client = GetClient(Connection);
-            var user = client.User.Current().Result;
+            Client = null;
+            GetClient(Connection);
         }
 
         public void Connect(IGitConnection connection)
         {
             Connection = connection;
-            GetClient(Connection);
+            Connect();
+        }
+
+        public IGitOwner GetCurrentOwner()
+        {
+            return GetOwner(Connection.Login);
         }
 
         public override IGitOwner GetOwner(string name)
         {
-            return new GitHubOwner(name, Connection);
+            return new GitHubOwner(Client, name, Connection);
         }
 
         public override IGitRepository GetRepository(long repositoryId)
         {
-            var client = GetClient(Connection);
-            var repository = client.Repository.Get(repositoryId).Result;
-            var owner = new GitHubOwner(repository.Owner.Name, Connection);
-            var gitHubRepository = new GitHubRepository(owner);
+            var repository = Client.Repository.Get(repositoryId).Result;
+            var owner = new GitHubOwner(Client, repository.Owner.Name, Connection);
+            var gitHubRepository = new GitHubRepository(Client, owner);
             gitHubRepository.Map(repository);
             return gitHubRepository;
         }
 
         public override IGitCommit GetCommit(long repositoryId, string reference)
         {
-            var client = GetClient(Connection);
-            var commit = client.Repository.Commit.Get(repositoryId, reference).Result;
-            var gitHubCommit = new GitHubCommit();
+            var commit = Client.Repository.Commit.Get(repositoryId, reference).Result;
+            var gitHubCommit = new GitHubCommit(Client);
             gitHubCommit.Map(commit);
             return gitHubCommit;
         }
 
         public IReadOnlyList<RepositoryContent> GetRepositoryContent(long repositoryId, string reference)
         {
-            var client = GetClient(Connection);
-            return client.Repository.Content.GetAllContentsByRef(repositoryId, reference).Result;
-        }
-
-        public IGitOwner GetCurrentOwner()
-        {
-            return GetOwner(Connection.Login);
+            return Client.Repository.Content.GetAllContentsByRef(repositoryId, reference).Result;
         }
 
         public void CreateProject(string name, string description)

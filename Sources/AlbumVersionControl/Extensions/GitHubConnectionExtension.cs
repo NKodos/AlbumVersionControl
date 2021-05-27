@@ -14,7 +14,7 @@ namespace AlbumVersionControl.Extensions
 
             return !string.IsNullOrEmpty(configConnection.Password)
                 ? new GitHubConnection(configConnection.Login, configConnection.Password)
-                : new GitHubConnection();
+                : new GitHubConnection {Login = configConnection.Login};
         }
     }
 }

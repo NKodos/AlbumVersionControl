@@ -1,6 +1,7 @@
 ﻿using System.Configuration;
 using AlbumVersionControl.Configs;
 using AlbumVersionControl.Extensions;
+using AlbumVersionControl.Models;
 using AlbumVersionControl.Models.GitHubApi;
 using AlbumVersionControl.View;
 using DevExpress.Mvvm;
@@ -55,11 +56,7 @@ namespace AlbumVersionControl.ViewModels
             if (result != null && result.Value)
             {
                 Program.GitHubService.CreateProject(newProjectDialog.ProjectName, newProjectDialog.ProjectDescription);
-
-                if (NavigationService.Current is ProjectJournalViewModel projectJournalViewModel)
-                {
-                    projectJournalViewModel.LoadProjects();
-                }
+                LoadProjectJournal();
             }
         }
 
@@ -101,7 +98,9 @@ namespace AlbumVersionControl.ViewModels
 
         private void LoadProjectJournal()
         {
-            NavigationService.Navigate("ProjectJournalView", null, this);
+            var gitHubRepositories = Program.GitHubService.GetCurrentOwner().GetRepositories();
+            var projects = Project.GetFromGitRepositories(gitHubRepositories);
+            NavigationService.Navigate("ProjectJournalView", projects, this);
         }
 
         private void LoadProjectJournalIfConnected()

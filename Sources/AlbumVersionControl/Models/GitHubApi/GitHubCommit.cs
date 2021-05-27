@@ -1,26 +1,28 @@
 ﻿using System;
 using GitApi.Interfaces;
+using Octokit;
 
 namespace AlbumVersionControl.Models.GitHubApi
 {
     public class GitHubCommit : GitHubObject, IGitCommit
     {
-        public GitHubCommit()
+        public GitHubCommit(GitHubClient client)
         {
+            Client = client;
         }
 
-        public GitHubCommit(IGitRepository repository)
+        public GitHubCommit(GitHubClient client, IGitRepository repository) : this(client)
         {
             Repository = repository;
         }
 
-        public GitHubCommit(string message, string sha) : this()
+        public GitHubCommit(GitHubClient client, string message, string sha) : this(client)
         {
             Message = message;
             Sha = sha;
         }
 
-        public GitHubCommit(string message, string sha, IGitRepository repository) : this(message, sha)
+        public GitHubCommit(GitHubClient client, string message, string sha, IGitRepository repository) : this(client, message, sha)
         {
             Repository = repository;
         }
@@ -39,17 +41,17 @@ namespace AlbumVersionControl.Models.GitHubApi
         {
             if (Repository == null)
             {
-                Repository = new GitHubRepository();
+                Repository = new GitHubRepository(Client);
                 if (Repository is GitHubRepository gitHubRepository)
                 {
                     gitHubRepository.Map(commit.Repository);
                 }
             }
 
-            Message = commit.Commit.Message;
+            Message = commit.Commit?.Message;
             Sha = commit.Sha;
-            Author = commit.Author.Login;
-            CreatedAt = commit.Commit.Committer.Date.DateTime;
+            Author = commit.Author?.Login;
+            if (commit.Commit != null) CreatedAt = commit.Commit.Committer.Date.DateTime;
         }
     }
 }

@@ -9,54 +9,55 @@ namespace AlbumVersionControl.Models.GitHubApi
     {
         // Todo: сделать эту константу генерируемую из каких-то идентифицирующихся элементов
         public const string ProjectName = "AlbumVersionControl";
-        private GitHubClient _client;
+
+        protected GitHubClient Client;
 
         public GitHubClient GetClient(IGitConnection connection)
         {
             try
             {
-                if (_client != null) return _client;
+                if (Client != null) return Client;
 
                 CreatNewClient(connection);
 
-                var user = connection.ConnectionType == GitConnectionType.Guest 
-                    ?_client.User.Get(connection.Login).Result
-                    :_client.User.Current().Result;
+                var user = connection.ConnectionType == GitConnectionType.Oauth 
+                    ? Client.User.Current().Result
+                    : Client.User.Get(connection.Login).Result;
 
                 if (connection.ConnectionType == GitConnectionType.Oauth)
                 {
                     connection.Login = user.Login;
                 }
 
-                return _client;
+                return Client;
             }
             catch
             {
-                _client = null;
+                Client = null;
                 throw;
             }
         }
 
         protected virtual GitHubClient CreatNewClient(IGitConnection connection)
         {
-            _client = new GitHubClient(new ProductHeaderValue(ProjectName));
+            Client = new GitHubClient(new ProductHeaderValue(ProjectName));
 
             switch (connection.ConnectionType)
             {
                 case GitConnectionType.Guest:
                     break;
                 case GitConnectionType.Basic:
-                    _client.Credentials =
+                    Client.Credentials =
                         new Credentials(connection.Login, connection.Password, AuthenticationType.Basic);
                     break;
                 case GitConnectionType.Oauth:
-                    _client.Credentials = new Credentials(connection.Token, AuthenticationType.Oauth);
+                    Client.Credentials = new Credentials(connection.Token, AuthenticationType.Oauth);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
 
-            return _client;
+            return Client;
         }
     }
 }

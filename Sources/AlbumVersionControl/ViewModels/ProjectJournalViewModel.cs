@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using AlbumVersionControl.Models;
 using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
@@ -24,16 +26,30 @@ namespace AlbumVersionControl.ViewModels
             NavigateProject(currentItem);
         }
 
-        public void LoadProjects()
+        public void SetProjects(List<Project> projects)
         {
-            var gitHubRepositories = Program.GitHubService.GetCurrentOwner().GetRepositories();
-            Projects = new ObservableCollection<Project>(Project.GetFromGitRepositories(gitHubRepositories));
+            Projects.Clear();
+            foreach (var project in projects)
+            {
+                Projects.Add(project);
+            }
         }
 
         protected override void OnInitializeInRuntime()
         {
             base.OnInitializeInRuntime();
-            LoadProjects();
+            Projects = new ObservableCollection<Project>();
+        }
+
+        protected override void OnParameterChanged(object parameter)
+        {
+            base.OnParameterChanged(parameter);
+
+            if (parameter == null) parameter = new List<Project>();
+            if (!(parameter is List<Project> projects))
+                throw new ArgumentException("Parameter type unknown", nameof(parameter));
+
+            SetProjects(projects);
         }
 
         private void NavigateProject(Project project)
