@@ -4,13 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Создание проекта" Height="255" Width="550" WindowStartupLocation="CenterScreen" WindowStyle="ToolWindow" FontFamily="Tahoma" FontSize="13" ResizeMode="NoResize">
+        Title="Создание проекта" Height="260" MaxHeight="500" Width="500" WindowStartupLocation="CenterScreen" WindowStyle="ToolWindow" FontFamily="Tahoma" FontSize="13" ResizeMode="NoResize">
     <Grid>
         <StackPanel Orientation="Vertical">
             <TextBlock FontWeight="Bold" Margin="20,30,0,0">Название</TextBlock>
-            <TextBox Name="txtName"  Margin="30,5,30,20" Width="300" HorizontalAlignment="Left"></TextBox>
+            <TextBox Name="NameTextBox"  Margin="30,5,30,20" Width="300" HorizontalAlignment="Left"></TextBox>
             <TextBlock Margin="20,0,0,0" FontWeight="Bold">Описание</TextBlock>
-            <TextBox Name="txtDescription" Margin="30,5,30,10" Width="500" HorizontalAlignment="Left"></TextBox>
+            <TextBox Name="DescriptionTextBox" Margin="30,5,30,10" MinWidth="400" Height="50" HorizontalAlignment="Left" 
+                     TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Top"></TextBox>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10,8,20,0">
                 <Button Content="Создать" HorizontalAlignment="Right" Margin="10,0,8,0" Click="ButtonOk_Click"/>
                 <Button Content="Отмена" HorizontalAlignment="Right" Click="ButtonCancel_Click"/>

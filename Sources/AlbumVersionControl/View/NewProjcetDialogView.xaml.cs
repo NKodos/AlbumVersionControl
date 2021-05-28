@@ -14,12 +14,12 @@ namespace AlbumVersionControl.View
 
         public string ProjectName
         {
-            get => txtName.Text;
+            get => NameTextBox.Text;
         }
 
         public string ProjectDescription
         {
-            get => txtDescription.Text;
+            get => DescriptionTextBox.Text;
         }
 
         private void ButtonOk_Click(object sender, RoutedEventArgs e)

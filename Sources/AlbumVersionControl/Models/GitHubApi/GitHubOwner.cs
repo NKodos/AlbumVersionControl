@@ -2,6 +2,7 @@
 using System.Linq;
 using GitApi.Interfaces;
 using Octokit;
+using UnidecodeSharpFork;
 
 namespace AlbumVersionControl.Models.GitHubApi
 {
@@ -36,7 +37,9 @@ namespace AlbumVersionControl.Models.GitHubApi
 
         public IGitRepository CreateRepository(string name, string description)
         {
-            var newRepository = new NewRepository(name) { AutoInit = true, Description = description };
+            var translitName = GetTranslitName(name);
+            description = $"#{name}///{description}";
+            var newRepository = new NewRepository(translitName) { AutoInit = true, Description = description };
             var repository = Client.Repository.Create(newRepository).Result;
             var gitHubRepository = new GitHubRepository(Client, this);
             gitHubRepository.Map(repository);
@@ -52,6 +55,11 @@ namespace AlbumVersionControl.Models.GitHubApi
                 gitHubRepository.Map(repository);
                 return gitHubRepository;
             });
+        }
+
+        private string GetTranslitName(string rusName)
+        {
+            return rusName.Unidecode().Replace(' ', '_');
         }
     }
 }

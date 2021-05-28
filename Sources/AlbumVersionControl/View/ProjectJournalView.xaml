@@ -18,7 +18,7 @@
                 <RowDefinition Height="50"></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            <dxg:GridControl Name="MainGrid" Grid.Row="1" AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True" 
+            <dxg:GridControl Name="MainGrid" Grid.Row="1" AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True"
                              ItemsSource="{Binding Projects}">
                 <dxg:GridControl.View>
                     <dxg:TableView ShowTotalSummary="True" AutoWidth="True" BestFitMode="VisibleRows">
@@ -29,11 +29,12 @@
                         </dxmvvm:Interaction.Behaviors>
                     </dxg:TableView>
                 </dxg:GridControl.View>
-                <dxg:GridColumn FieldName="Title" Header="Заголовок" IsSmart="True"/>
-                <dxg:GridColumn FieldName="Caption" Header="Описание" IsSmart="True"/>
-                <dxg:GridColumn FieldName="CreatedAt" Header="Дата создания" IsSmart="True"/>
-                <dxg:GridColumn FieldName="UpdatedAt" Header="Дата изменения" IsSmart="True"/>
-                <dxg:GridColumn FieldName="GitRepository" Header="Репозитории" Visible="False"/>
+                <dxg:GridColumn FieldName="Title" Header="Заголовок" IsSmart="True" ReadOnly="True"/>
+                <dxg:GridColumn FieldName="Caption" Header="Описание" IsSmart="True" ReadOnly="True"/>
+                <dxg:GridColumn FieldName="Tag" Header="Tag" IsSmart="True" ReadOnly="True"/>
+                <dxg:GridColumn FieldName="CreatedAt" Header="Дата создания" IsSmart="True" ReadOnly="True"/>
+                <dxg:GridColumn FieldName="UpdatedAt" Header="Дата изменения" IsSmart="True" ReadOnly="True"/>
+                <dxg:GridColumn FieldName="GitRepository" Header="Репозитории" Visible="False" ReadOnly="True"/>
             </dxg:GridControl>
         </Grid>
     </dxwui:PageAdornerControl>
