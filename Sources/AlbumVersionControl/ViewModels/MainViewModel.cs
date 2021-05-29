@@ -15,10 +15,36 @@ namespace AlbumVersionControl.ViewModels
 
         protected IWindowService WindowService { get { return GetService<IWindowService>(); } }
 
+        public bool IsJournalViewShown
+        {
+            get { return GetValue<bool>(nameof(IsJournalViewShown)); }
+            set { SetValue(value, nameof(IsJournalViewShown)); }
+        }
+
+        public bool IsProjectViewShown
+        {
+            get { return GetValue<bool>(nameof(IsProjectViewShown)); }
+            set { SetValue(value, nameof(IsProjectViewShown)); }
+        }
+
+        public bool IsProjectVersionViewShown
+        {
+            get { return GetValue<bool>(nameof(IsProjectVersionViewShown)); }
+            set { SetValue(value, nameof(IsProjectVersionViewShown)); }
+        }
+
         public void OnViewLoaded()
         {
             InitializeGitHubService();
             LoadProjectJournalIfConnected();
+        }
+
+        public void OnViewContentRendered()
+        {
+            var currentView = NavigationService.Current;
+            IsJournalViewShown = currentView is ProjectJournalViewModel;
+            IsProjectViewShown = currentView is ProjectViewModel;
+            IsProjectVersionViewShown = currentView is ProjectVersionViewModel;
         }
 
         [Command]

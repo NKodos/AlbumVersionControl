@@ -25,16 +25,12 @@
         <dxr:RibbonControl DockPanel.Dock="Top" RibbonStyle="Office2019">
             <dxr:RibbonDefaultPageCategory>
                 <dxr:RibbonPage Caption="Главная">
-                    <dxr:RibbonPageGroup Caption="Проекты">
+                    <dxr:RibbonPageGroup Caption="Проекты" IsVisible="{Binding IsJournalViewShown}">
                         <dxb:BarButtonItem Content="Создать" RibbonStyle="Large"
                                            Command="{Binding CreateProjectCommand}"
                                            LargeGlyph="{dx:DXImage SvgImages/Outlook Inspired/AddFile.svg}" />
-                        <dxb:BarButtonItem Content="Настройки" RibbonStyle="Large"
-                                           LargeGlyph="{dx:DXImage SvgImages/Icon Builder/Actions_Settings.svg}" />
-                        <dxb:BarButtonItem Content="Удалить" RibbonStyle="Large"
-                                           LargeGlyph="{dx:DXImage SvgImages/Snap/SnapDeleteList.svg}" />
                     </dxr:RibbonPageGroup>
-                    <dxr:RibbonPageGroup Caption="Версии">
+                    <dxr:RibbonPageGroup Caption="Версии" IsVisible="{DXBinding 'IsProjectViewShown||IsProjectVersionViewShown'}">
                         <dxb:BarButtonItem Content="Создать новую" RibbonStyle="Large"
                                            Command="{Binding CreateNewVersionCommand}"
                                            LargeGlyph="{dx:DXImage SvgImages/Edit/Copy.svg}" />
@@ -45,7 +41,7 @@
                                            Command="{Binding GenerateClassesCommand}"
                                            LargeGlyph="{dx:DXImage SvgImages/RichEdit/ShowAllFieldCodes.svg}" />
                     </dxr:RibbonPageGroup>
-                    <dxr:RibbonPageGroup Caption="Настройки программы">
+                    <dxr:RibbonPageGroup Caption="Настройки программы" IsVisible="{Binding IsJournalViewShown}">
                         <dxb:BarButtonItem Content="Авторизация" RibbonStyle="Large"
                                            Command="{Binding ShowAuthorizationWindowCommand}"
                                            LargeGlyph="{dx:DXImage SvgImages/Business Objects/BO_User.svg}" />
@@ -60,6 +56,7 @@
         <dxwui:NavigationFrame Name="NavigationFrame" NavigationCacheMode="Required" AnimationType="SlideHorizontal">
             <dxmvvm:Interaction.Triggers>
                 <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding OnViewLoadedCommand}" />
+                <dxmvvm:EventToCommand EventName="ContentRendered"  Command="{Binding OnViewContentRenderedCommand}" />
             </dxmvvm:Interaction.Triggers>
             <dxmvvm:Interaction.Behaviors>
                 <dxwuin:FrameNavigationService />
