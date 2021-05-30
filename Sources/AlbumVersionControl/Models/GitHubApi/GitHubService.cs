@@ -55,6 +55,11 @@ namespace AlbumVersionControl.Models.GitHubApi
             return Client.Repository.Content.GetAllContentsByRef(repositoryId, reference).Result;
         }
 
+        public IReadOnlyList<RepositoryContent> GetRepositoryContent(long repositoryId, string reference, string path)
+        {
+            return Client.Repository.Content.GetAllContentsByRef(repositoryId, path, reference).Result;
+        }
+
         public void CreateProject(string name, string description)
         {
             var owner = GetCurrentOwner();

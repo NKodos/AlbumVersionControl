@@ -71,8 +71,9 @@ namespace AlbumVersionControl.ViewModels
         {
             if (SelectedVersion != null)
             {
-                var gitHubContent = new GitHubContent(Program.GitHubService);
-                gitHubContent.LoadFiles(SelectedVersion.CommitDetail.Key, SelectedVersion.CommitDetail.Value);
+                var gitHubContent = new GitHubContent(Program.GitHubService, SelectedVersion.CommitDetail.Key, SelectedVersion.CommitDetail.Value);
+                gitHubContent.ClearFolder();
+                gitHubContent.DownloadFiles();
                 var folderPath = new AppConfiguration().VersionContentFolder;
                 Process.Start($"file://{folderPath}");
             }
