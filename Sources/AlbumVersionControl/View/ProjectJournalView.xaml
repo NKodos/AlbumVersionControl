@@ -29,8 +29,8 @@
                         </dxmvvm:Interaction.Behaviors>
                     </dxg:TableView>
                 </dxg:GridControl.View>
-                <dxg:GridColumn FieldName="Title" Header="Заголовок" IsSmart="True" ReadOnly="True"/>
-                <dxg:GridColumn FieldName="Caption" Header="Описание" IsSmart="True" ReadOnly="True"/>
+                <dxg:GridColumn FieldName="Title" Header="Заголовок" IsSmart="True" ReadOnly="True" Width="150"/>
+                <dxg:GridColumn FieldName="Caption" Header="Описание" IsSmart="True" ReadOnly="True"  Width="360"/>
                 <dxg:GridColumn FieldName="Tag" Header="Tag" IsSmart="True" ReadOnly="True"/>
                 <dxg:GridColumn FieldName="CreatedAt" Header="Дата создания" IsSmart="True" ReadOnly="True"/>
                 <dxg:GridColumn FieldName="UpdatedAt" Header="Дата изменения" IsSmart="True" ReadOnly="True"/>

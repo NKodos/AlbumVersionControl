@@ -49,8 +49,8 @@
                         </dxmvvm:Interaction.Behaviors>
                     </dxg:TableView>
                 </dxg:GridControl.View>
-                <dxg:GridColumn FieldName="Version" Header="Версия" IsSmart="True"/>
-                <dxg:GridColumn FieldName="Description" Header="Описание" IsSmart="True"/>
+                <dxg:GridColumn FieldName="Version" Header="Версия" IsSmart="True" Width="40"/>
+                <dxg:GridColumn FieldName="Description" Header="Описание" IsSmart="True" Width="200"/>
                 <dxg:GridColumn FieldName="CreatedAt" Header="Дата создания" IsSmart="True"/>
                 <dxg:GridColumn FieldName="Author" Header="Автор" IsSmart="True"/>
                 <dxg:GridColumn FieldName="Id" Header="Id" IsSmart="True" Visible="False"/>
