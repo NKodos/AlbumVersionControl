@@ -45,21 +45,10 @@ namespace AlbumVersionControl.Models.GitHubApi
                 masterReference.Object.Sha).Result;
             var nt = new NewTree { BaseTree = latestCommit.Tree.Sha };
 
-            foreach (var filePath in Directory.GetFiles(new AppConfiguration().VersionContentFolder))
-            {
-                var textBlob = new NewBlob { Encoding = EncodingType.Utf8, Content = File.ReadAllText(filePath) };
-                var textBlobRef = Client.Git.Blob.Create(Owner.Name, Name, textBlob);
-
-                nt.Tree.Add(new NewTreeItem
-                {
-                    Path = Path.GetFileName(filePath),
-                    Mode = FileMode.File,
-                    Type = TreeType.Blob,
-                    Sha = textBlobRef.Result.Sha
-                });
-            }
-
+            AddCommitContent(nt, new AppConfiguration().VersionContentFolder);
+            
             var newTree = Client.Git.Tree.Create(Owner.Name, Name, nt).Result;
+
             var newCommit = new NewCommit(message, newTree.Sha, masterReference.Object.Sha);
             var commit = Client.Git.Commit.Create(Owner.Name, Name, newCommit).Result;
             
@@ -106,6 +95,35 @@ namespace AlbumVersionControl.Models.GitHubApi
             CreatedAt = repository.CreatedAt.DateTime;
             UpdatedAt = repository.UpdatedAt.DateTime;
             Url = repository.Url;
+        }
+
+        private void AddCommitContent(NewTree newTree, string rootPath, string directoryPath = "")
+        {
+            var currentPath = Path.Combine(rootPath, directoryPath);
+
+            foreach (var filePath in Directory.GetFiles(currentPath))
+            {
+                var textBlob = new NewBlob { Encoding = EncodingType.Utf8, Content = File.ReadAllText(filePath) };
+                var textBlobRef = Client.Git.Blob.Create(Owner.Name, Name, textBlob);
+
+                newTree.Tree.Add(new NewTreeItem
+                {
+                    Path = Path.Combine(directoryPath, Path.GetFileName(filePath)).Replace(@"\", "/"),
+                    Mode = FileMode.File,
+                    Type = TreeType.Blob,
+                    Sha = textBlobRef.Result.Sha
+                });
+            }
+
+            foreach (var directory in Directory.GetDirectories(currentPath))
+            {
+                var directoryName = new DirectoryInfo(directory).Name;
+                var nextDirecotyName = string.IsNullOrWhiteSpace(directoryName)
+                    ? directoryPath
+                    : Path.Combine(directoryPath, directoryName);
+
+                AddCommitContent(newTree, rootPath, nextDirecotyName);
+            }
         }
     }
 }
