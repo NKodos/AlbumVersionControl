@@ -1,6 +1,9 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using AlbumVersionControl.Configs;
+using DevExpress.Xpf.Grid;
 using Octokit;
 
 namespace AlbumVersionControl.Models.GitHubApi
@@ -39,12 +42,49 @@ namespace AlbumVersionControl.Models.GitHubApi
             }
         }
 
-        public void DownloadFilesForDirectory(long repositoryId, string reference, string path)
+        public void DownloadFilesForDirectory(string path)
         {
             foreach (var content in GitHubService.GetRepositoryContent(RepositoryId, Reference, path))
             {
                 DownloadFile(content);
             }
+        }
+
+        public List<ProjectVersionContent> GetProjectVersionContents()
+        {
+            var result = new List<ProjectVersionContent>();
+
+            foreach (var content in GitHubService.GetRepositoryContent(RepositoryId, Reference))
+            {
+                result.Add(GetProjectVersionContent(content));
+            }
+
+            return result;
+        }
+
+        public List<ProjectVersionContent> GetProjectVersionContents(string path)
+        {
+            var result = new List<ProjectVersionContent>();
+            
+            foreach (var content in GitHubService.GetRepositoryContent(RepositoryId, Reference, path))
+            {
+                result.Add(GetProjectVersionContent(content));
+            }
+
+            return result;
+        }
+
+        private ProjectVersionContent GetProjectVersionContent(RepositoryContent content)
+        {
+            var contentResult = new ProjectVersionContent();
+            contentResult.Map(content);
+
+            if (content.Type == new StringEnum<ContentType>(ContentType.Dir))
+            {
+                contentResult.InnerContents = GetProjectVersionContents(content.Path);
+            }
+
+            return contentResult;
         }
 
         private void DownloadFile(RepositoryContent content)
@@ -54,7 +94,7 @@ namespace AlbumVersionControl.Models.GitHubApi
                 if (content.Type == new StringEnum<ContentType>(ContentType.Dir))
                 {
                     CreateDirectory(content.Path);
-                    DownloadFilesForDirectory(RepositoryId, Reference, content.Path);
+                    DownloadFilesForDirectory(content.Path);
                 }
                 else if (content.Type == new StringEnum<ContentType>(ContentType.File))
                 {

@@ -67,18 +67,6 @@ namespace AlbumVersionControl.ViewModels
             }
         }
 
-        public void OpenCuerrentVersionFolder()
-        {
-            if (SelectedVersion != null)
-            {
-                var gitHubContent = new GitHubContent(Program.GitHubService, SelectedVersion.CommitDetail.Key, SelectedVersion.CommitDetail.Value);
-                gitHubContent.ClearFolder();
-                gitHubContent.DownloadFiles();
-                var folderPath = new AppConfiguration().VersionContentFolder;
-                Process.Start($"file://{folderPath}");
-            }
-        }
-
         private void NavigateProject(ProjectVersion version)
         {
             NavigationService.Navigate("ProjectVersionView", version, this);

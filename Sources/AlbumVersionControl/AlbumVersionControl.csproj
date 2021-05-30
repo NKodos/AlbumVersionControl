@@ -77,8 +77,10 @@
     <Compile Include="Extensions\GitHubCommitExtension.cs" />
     <Compile Include="Extensions\GitHubConnectionExtension.cs" />
     <Compile Include="Extensions\ProjectExtension.cs" />
+    <Compile Include="Extensions\TreeListNodeExtension.cs" />
     <Compile Include="Generator.cs" />
     <Compile Include="Models\GitHubApi\GitHubContent.cs" />
+    <Compile Include="Models\ProjectVersionContent.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Models\GitHubApi\GitHubCommit.cs" />
     <Compile Include="Models\GitHubApi\GitHubConnection.cs" />

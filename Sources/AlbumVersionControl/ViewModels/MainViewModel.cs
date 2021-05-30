@@ -39,6 +39,7 @@ namespace AlbumVersionControl.ViewModels
             LoadProjectJournalIfConnected();
         }
 
+        [Command]
         public void OnViewContentRendered()
         {
             var currentView = NavigationService.Current;
@@ -62,9 +63,9 @@ namespace AlbumVersionControl.ViewModels
         [Command]
         public void OpenVersionFolder()
         {
-            if (NavigationService.Current is ProjectViewModel projectViewModel)
+            if (NavigationService.Current is ProjectVersionViewModel projectVersionViewModel)
             {
-                projectViewModel.OpenCuerrentVersionFolder();
+                projectVersionViewModel.OpenCuerrentVersionFolder();
             }
         }
 

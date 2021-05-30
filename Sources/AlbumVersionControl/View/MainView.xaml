@@ -33,12 +33,15 @@
                     <dxr:RibbonPageGroup Caption="Версии" IsVisible="{DXBinding 'IsProjectViewShown||IsProjectVersionViewShown'}">
                         <dxb:BarButtonItem Content="Создать новую" RibbonStyle="Large"
                                            Command="{Binding CreateNewVersionCommand}"
+                                           IsVisible="{Binding IsProjectViewShown}"
                                            LargeGlyph="{dx:DXImage SvgImages/Edit/Copy.svg}" />
                         <dxb:BarButtonItem Content="Показать содержимое" RibbonStyle="Large"
-                                           LargeGlyph="{dx:DXImage SvgImages/Actions/Open.svg}"
-                                           Command="{Binding OpenVersionFolderCommand}" />
+                                           Command="{Binding OpenVersionFolderCommand}"
+                                           IsVisible="{Binding IsProjectVersionViewShown}"
+                                           LargeGlyph="{dx:DXImage SvgImages/Actions/Open.svg}" />
                         <dxb:BarButtonItem Content="Сгенерировать классы" RibbonStyle="Large"
                                            Command="{Binding GenerateClassesCommand}"
+                                           IsVisible="{Binding IsProjectVersionViewShown}"
                                            LargeGlyph="{dx:DXImage SvgImages/RichEdit/ShowAllFieldCodes.svg}" />
                     </dxr:RibbonPageGroup>
                     <dxr:RibbonPageGroup Caption="Настройки программы" IsVisible="{Binding IsJournalViewShown}">
