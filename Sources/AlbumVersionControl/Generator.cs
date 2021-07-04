@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 using AlbumVersionControl.Configs;
 
 namespace AlbumVersionControl
@@ -10,15 +11,23 @@ namespace AlbumVersionControl
     {
         public static void Generate()
         {
-            var generatedClassesFolder = new AppConfiguration().GeneratedClassesFolder;
-            var xsdFiles = Directory.GetFiles(generatedClassesFolder, "*.xsd").ToList();
-            var fileArguments = xsdFiles.Aggregate("", (current, xsdFile) => current + xsdFile + " ");
-            var commandLine = $"{fileArguments} /classes /o:{generatedClassesFolder}";
-            var p = new ProcessStartInfo("xsd.exe")
+            using (var dialog = new FolderBrowserDialog())
             {
-                Arguments = commandLine, WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory
-            };
-            Process.Start(p);
+                var result = dialog.ShowDialog();
+
+                if (result != DialogResult.OK) return;
+                var generatedClassesFolder = dialog.SelectedPath;
+
+                var xsdFiles = Directory.GetFiles(new AppConfiguration().GeneratedClassesFolder, "*.xsd").ToList();
+                var fileArguments = xsdFiles.Aggregate("", (current, xsdFile) => current + xsdFile + " ");
+                var commandLine = $"{fileArguments} /classes /o:{generatedClassesFolder}";
+
+                var p = new ProcessStartInfo("xsd.exe")
+                {
+                    Arguments = commandLine, WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory
+                };
+                Process.Start(p);
+            }
         }
     }
 }

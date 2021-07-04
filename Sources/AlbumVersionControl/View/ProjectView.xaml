@@ -11,7 +11,7 @@
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="700"
              Margin="50,0,50,0"
-             DataContext="{dxmvvm:ViewModelSource viewModel:ProjectViewModel}">
+             DataContext="{dxmvvm:ViewModelSource viewModel:ProjectViewModel}" FontSize="14">
 
     <dxwui:PageAdornerControl Header="{Binding CurrentProject.Title}">
         <Grid>
@@ -33,6 +33,17 @@
 
             <dxg:GridControl Name="MainGrid" Grid.Row="4" AutoGenerateColumns="AddNew" 
                              EnableSmartColumnsGeneration="True" ItemsSource="{Binding Versions}">
+                <dxg:GridControl.Resources>
+                    <Style TargetType="dxg:GridColumn">
+                        <Setter Property="HeaderStyle">
+                            <Setter.Value>
+                                <Style TargetType="dxg:BaseGridHeader">
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                </Style>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </dxg:GridControl.Resources>
 
                 <dxmvvm:Interaction.Behaviors>
                     <dxmvvm:EventToCommand EventName="SelectedItemChanged" 

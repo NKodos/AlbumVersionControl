@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using AlbumVersionControl.Models;
+using AlbumVersionControl.View;
 using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
+using Octokit;
+using Project = AlbumVersionControl.Models.Project;
 
 namespace AlbumVersionControl.ViewModels
 {

@@ -7,6 +7,7 @@
              xmlns:viewModels="clr-namespace:AlbumVersionControl.ViewModels"
              xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
              xmlns:dxwui="http://schemas.devexpress.com/winfx/2008/xaml/windowsui"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
              mc:Ignorable="d"
              d:DesignHeight="200" d:DesignWidth="500"
              Margin="50,0,50,0"
@@ -19,7 +20,19 @@
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
             <dxg:GridControl Name="MainGrid" Grid.Row="1" AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True"
-                             ItemsSource="{Binding Projects}">
+                             ItemsSource="{Binding Projects}" FontSize="14">
+                <dxg:GridControl.Resources>
+                    <Style TargetType="dxg:GridColumn">
+                        <Setter Property="HeaderStyle">
+                            <Setter.Value>
+                                <Style TargetType="dxg:BaseGridHeader">
+                                    <Setter Property="FontWeight" Value="Medium"/>
+                                </Style>
+
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </dxg:GridControl.Resources>
                 <dxg:GridControl.View>
                     <dxg:TableView ShowTotalSummary="True" AutoWidth="True" BestFitMode="VisibleRows">
                         <dxmvvm:Interaction.Behaviors>
@@ -29,8 +42,16 @@
                         </dxmvvm:Interaction.Behaviors>
                     </dxg:TableView>
                 </dxg:GridControl.View>
-                <dxg:GridColumn FieldName="Title" Header="Заголовок" IsSmart="True" ReadOnly="True" Width="150"/>
-                <dxg:GridColumn FieldName="Caption" Header="Описание" IsSmart="True" ReadOnly="True"  Width="360"/>
+                <dxg:GridColumn FieldName="Title" Header="Заголовок" IsSmart="True" ReadOnly="True" Width="150">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings TextWrapping="Wrap" VerticalContentAlignment="Top"/>
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+                <dxg:GridColumn FieldName="Caption" Header="Описание" IsSmart="True" ReadOnly="True"  Width="360">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings TextWrapping="Wrap"/>
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
                 <dxg:GridColumn FieldName="Tag" Header="Tag" IsSmart="True" ReadOnly="True"/>
                 <dxg:GridColumn FieldName="CreatedAt" Header="Дата создания" IsSmart="True" ReadOnly="True"/>
                 <dxg:GridColumn FieldName="UpdatedAt" Header="Дата изменения" IsSmart="True" ReadOnly="True"/>
